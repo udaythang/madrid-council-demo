@@ -286,6 +286,11 @@ main > .section:first-of-type {
   margin-top: 0;
 }
 
+/* the metadata section is emptied when the page is rendered; it takes no space */
+main > .section:empty {
+  padding: 0;
+}
+
 /* default-content headings: Lato 40px, source title4 / title5; centred on phones */
 main > .section > .default-content-wrapper > h2,
 main > .section > .default-content-wrapper > h3:first-child {
