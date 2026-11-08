@@ -1,0 +1,186 @@
+/* "Lo más visto" strip (source .most-watched). Mobile first: stacked tab + centred list */
+
+/* thin bar: drop the global section bottom padding and the wrapper gutter */
+main .section.columns-most-viewed-container {
+  padding: 0;
+}
+
+main .section.columns-most-viewed-container > .columns-most-viewed-wrapper {
+  padding: 0;
+}
+
+.columns-most-viewed {
+  display: flex;
+  flex-direction: column;
+  color: var(--text-color);
+}
+
+/* label tab */
+.columns-most-viewed .columns-most-viewed-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 41px;
+  padding: 12px;
+  background-color: #e3e1e1;
+  background-image: linear-gradient(#e3e1e1 0, #e3e1e1 40%, #b0b0b0 100%);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* arrow under the tab */
+.columns-most-viewed .columns-most-viewed-label::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: -6px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -6px;
+  border-style: solid;
+  border-width: 6px 6px 0;
+  border-color: #b0b0b0 transparent transparent;
+}
+
+.columns-most-viewed .columns-most-viewed-label > * {
+  position: relative;
+  margin: 0;
+  padding: 0 35px 0 0;
+  font-family: var(--heading-font-family);
+  font-size: var(--body-font-size-m);
+  line-height: 16px;
+  color: var(--text-color);
+}
+
+/* info icon (source sprite: 26px box, black ring with "i") */
+.columns-most-viewed .columns-most-viewed-label > *::after {
+  content: "i";
+  position: absolute;
+  top: 50%;
+  right: 2px;
+  box-sizing: border-box;
+  width: 22px;
+  height: 22px;
+  margin-top: -11px;
+  border: 2px solid #000;
+  border-radius: 50%;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  color: #000;
+}
+
+/* link rail */
+.columns-most-viewed .columns-most-viewed-links {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.columns-most-viewed .columns-most-viewed-links ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 13px 0 13px 9px;
+  list-style: none;
+  background-color: var(--madrid-grey-light);
+}
+
+.columns-most-viewed .columns-most-viewed-links li {
+  position: relative;
+  max-width: 100%;
+  min-width: 0;
+  text-align: center;
+}
+
+main .columns-most-viewed .columns-most-viewed-links a:any-link {
+  display: block;
+
+  /* source cuts titles server-side to ~33 characters; this matches its rendered width */
+  max-width: 28ch;
+  padding: 6px 0 7px;
+  overflow: hidden;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 15px;
+  color: #666;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+main .columns-most-viewed .columns-most-viewed-links a:hover,
+main .columns-most-viewed .columns-most-viewed-links a:focus-visible {
+  color: var(--madrid-blue);
+  text-decoration: underline;
+}
+
+/* desktop strip: tab at 25%, white rail with " / " separators */
+@media (width >= 600px) {
+  main .section.columns-most-viewed-container > .columns-most-viewed-wrapper {
+    max-width: var(--content-max-width);
+  }
+
+  .columns-most-viewed {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .columns-most-viewed .columns-most-viewed-label {
+    flex: 0 0 25%;
+    background-image: linear-gradient(to right, #e3e1e1 0, #e3e1e1 75%, #d1cfcf 100%);
+  }
+
+  .columns-most-viewed .columns-most-viewed-label::after {
+    top: 50%;
+    bottom: auto;
+    left: 100%;
+    margin: -6px 0 0;
+    border-width: 6px 0 6px 6px;
+    border-color: transparent transparent transparent #d1cfcf;
+  }
+
+  .columns-most-viewed .columns-most-viewed-links {
+    flex: 1 1 auto;
+  }
+
+  .columns-most-viewed .columns-most-viewed-links ul {
+    flex-direction: row;
+    box-sizing: border-box;
+    height: 40px;
+    background-color: var(--background-color);
+  }
+
+  .columns-most-viewed .columns-most-viewed-links li {
+    flex: 0 1 auto;
+    box-sizing: border-box;
+    max-width: calc(100% / 3);
+    padding: 0 9px 0 12px;
+  }
+
+  .columns-most-viewed .columns-most-viewed-links li + li::after {
+    content: "/";
+    position: absolute;
+    top: -3px;
+    left: 0;
+    font-family: var(--heading-font-family);
+    font-size: 20px;
+    line-height: 20px;
+    color: #dddbdb;
+  }
+
+  /* 25px tall tap area inside the 40px rail; the negative margin keeps the layout unchanged */
+  main .columns-most-viewed .columns-most-viewed-links a:any-link {
+    max-width: none;
+    margin: -6px 0;
+    padding: 6px 0;
+    font-size: 13px;
+    line-height: 13px;
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "variantName": "cards-news-mosaic",
+  "baseBlock": "cards",
+  "canonicalModel": "collection",
+  "visualCharacteristics": {
+    "purpose": "news mosaic where the first story is featured large and the others stack beside it",
+    "summary": "An asymmetric mosaic: the first card is large (2/3 width) and the other two stack beside it, titles on a translucent blue overlay."
+  },
+  "contentPattern": {
+    "structure": "cell 1: image; cell 2: linked title. The first row is the featured card",
+    "rows": [
+      [
+        "Image",
+        "Text: linked title"
+      ]
+    ],
+    "columns": 2,
+    "notes": "Each item links to a news detail page and the set changes daily. That makes it a dynamic list, so Cards."
+  },
+  "options": [],
+  "memberVariantIds": [],
+  "usage": "Daily news or highlights with 3 items: featured (2/3 width) plus two stacked cards, titles over the image.",
+  "reuseGuidance": "Reuse for any featured-plus-secondary news set. Use cards-tiles for an even grid.",
+  "sourceUrl": "https://www.madrid.es/portal/site/munimadrid"
+}

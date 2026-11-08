@@ -1,0 +1,99 @@
+/*
+ * Topic tiles (www.madrid.es #carouselHomeCorregido): square blue tiles with a white
+ * icon-font glyph and a white Lato label.
+ * Mobile and tablet: horizontal swipe carousel. Desktop: one row across the column.
+ */
+.cards-topics > ul {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0 0 8px;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: var(--madrid-blue) transparent;
+  scrollbar-width: thin;
+}
+
+/* min-height (not height): tiles grow instead of clipping when users enlarge text spacing */
+.cards-topics .cards-topics-item {
+  display: flex;
+  flex: 0 0 95px;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 115px;
+  background-color: var(--madrid-blue);
+  scroll-snap-align: start;
+}
+
+.cards-topics .cards-topics-label {
+  overflow-wrap: break-word;
+}
+
+.cards-topics .cards-topics-link,
+.cards-topics .cards-topics-item > .cards-topics-label {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 12px 15px;
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+}
+
+.cards-topics .cards-topics-link:any-link,
+.cards-topics .cards-topics-link:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.cards-topics .cards-topics-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+}
+
+/* glyph: 26px white, AytMadIcons (igualdad uses AytMadIcons2) */
+.cards-topics .cards-topics-icon {
+  display: block;
+  flex: 0 0 auto;
+  margin-bottom: 8px;
+  font-family: var(--icon-font-family);
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.2;
+  min-height: 31px;
+}
+
+.cards-topics [data-icon='economiayhacienda'] .cards-topics-icon::before { content: 'l'; }
+.cards-topics [data-icon='culturaociodeporte'] .cards-topics-icon::before { content: 'h'; }
+.cards-topics [data-icon='educacionyempleo'] .cards-topics-icon::before { content: 'o'; }
+.cards-topics [data-icon='medioambiente'] .cards-topics-icon::before { content: 'm'; }
+.cards-topics [data-icon='movilidadytransporte'] .cards-topics-icon::before { content: 'n'; }
+.cards-topics [data-icon='emergenciasyseguridad'] .cards-topics-icon::before { content: 'k'; }
+.cards-topics [data-icon='serviciossocialesysalud'] .cards-topics-icon::before { content: '<'; }
+.cards-topics [data-icon='viviendayurbanismo'] .cards-topics-icon::before { content: '?'; }
+
+.cards-topics [data-icon='igualdad'] .cards-topics-icon {
+  font-family: var(--icon-font-family-2);
+}
+
+.cards-topics [data-icon='igualdad'] .cards-topics-icon::before { content: 'd'; }
+
+@media (width >= 900px) {
+  .cards-topics > ul {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    padding: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "variantName": "online-chat",
+  "baseBlock": "online-chat",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "purpose": "floating Línea Madrid chat launcher fixed in the lower-right corner of the viewport",
+    "summary": "Blue speech bubble with a white border and white uppercase text (LINEA MADRID / CHAT ONLINE / ASISTENTE VIRTUAL), with a small orange close cross above its top-right edge."
+  },
+  "contentPattern": {
+    "structure": "one row, one cell: a link to where the chat runs; optional bubble image",
+    "rows": [
+      [
+        "Link (and optional image)"
+      ]
+    ],
+    "columns": 1,
+    "notes": "Fixed-position overlay: it takes no space in the page flow. Without a link it is informational only."
+  },
+  "options": [],
+  "memberVariantIds": [],
+  "usage": "Once per page, in its own section at the end of the page.",
+  "reuseGuidance": "Reuse for any floating launcher (chat, help). The real madrid.es chat only runs on www.madrid.es (its gateway accepts that origin only), so the link opens madrid.es.",
+  "sourceUrl": "https://www.madrid.es/portal/site/munimadrid"
+}

@@ -8,6 +8,11 @@ helix-importer-ui
 *.bak
 .idea
 
+# migration working files: backups, screenshots, generated import artifacts
+migration-work/
+tools/importer/reports/
+tools/importer/*.bundle.js
+
 # Ensure these files are tracked
 !CLAUDE.md
 !AGENTS.md

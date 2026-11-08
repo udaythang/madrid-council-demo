@@ -1,20 +1,201 @@
-footer {
-  background-color: var(--light-color);
+/* Madrid footer: black bar with logo, legal links and social icons (source .footer-copy) */
+footer .footer {
+  background-color: #000;
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: var(--body-font-size-m);
+  font-weight: 700;
+  line-height: 16px;
+}
+
+/* fragment metadata must never render */
+footer .footer .metadata,
+footer .footer .metadata-wrapper {
+  display: none;
+}
+
+footer .footer .footer-inner {
+  container-type: inline-size;
+  margin: 0 auto;
+  max-width: var(--content-max-width);
+}
+
+footer .footer .footer-inner > div {
+  padding: 0 5px;
+}
+
+/* logo */
+footer .footer .footer-logo {
+  margin-bottom: 22px;
+  text-align: center;
+}
+
+footer .footer .footer-logo img {
+  box-sizing: border-box;
+  height: auto;
+  max-width: none;
+  padding-top: 5%;
+  vertical-align: baseline;
+  width: 135px;
+}
+
+/* link lists */
+footer .footer ul {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  margin: 0 0 20px -5px;
+  padding: 0;
+}
+
+footer .footer li {
+  padding: 0 2px 0 0;
+}
+
+footer .footer .footer-inner > .footer-legal,
+footer .footer .footer-inner > .footer-social {
+  padding-top: 2.5cqw;
+}
+
+/* legal links, separated by commas like the source */
+footer .footer .footer-legal-list {
+  /* 8px between wrapped rows keeps the 24px tap areas from overlapping */
+  gap: 8px 3.5px;
+}
+
+footer .footer .footer-legal-list li {
+  line-height: 16px;
+}
+
+footer .footer li a:any-link,
+footer .footer li a:hover {
+  color: #fff;
+  font-size: var(--body-font-size-s);
+  line-height: var(--body-font-size-s);
+  text-decoration: underline;
+}
+
+footer .footer li a:focus-visible {
+  outline: 1px dotted #fff;
+  outline-offset: 0;
+}
+
+/* at least 24px tall tap areas; the negative margin keeps the layout unchanged */
+footer .footer .footer-legal-list a:any-link {
+  display: inline-block;
+  margin: -6px 0;
+  padding: 6px 0;
+}
+
+footer .footer .footer-legal-list li:not(:last-child) a::after {
+  content: " ,";
+}
+
+/* social icons: source PNG images (white), 35px; X is 28px */
+footer .footer .footer-social-list {
+  gap: 3px;
+  height: 37px;
+}
+
+footer .footer .footer-social-list a.footer-social-link {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+  height: 35px;
+  position: relative;
+  top: -9px;
+  width: 35px;
+}
+
+footer .footer .footer-social-list a.footer-social-x {
+  height: 28px;
+  width: 28px;
+}
+
+footer .footer .footer-social-youtube {
+  background-image: url("icons/youtube.png");
+}
+
+footer .footer .footer-social-instagram {
+  background-image: url("icons/instagram.png");
+}
+
+footer .footer .footer-social-facebook {
+  background-image: url("icons/facebook.png");
+}
+
+footer .footer .footer-social-x {
+  background-image: url("icons/x.png");
+}
+
+footer .footer .footer-visually-hidden {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+footer .footer .footer-extra {
   font-size: var(--body-font-size-xs);
+  padding-bottom: 20px;
+  text-align: center;
 }
 
-footer .footer > div {
-  margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
-}
-
-footer .footer p {
+footer .footer .footer-extra p {
   margin: 0;
 }
 
-@media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
+/* tablet and up: one row, source grid col-sm-2 / 1 / 6 / 3 */
+@media (width >= 600px) {
+  footer .footer .footer-inner {
+    align-items: start;
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 6fr) minmax(0, 3fr);
+    min-height: 60px;
+    width: calc(100% - 60px);
+  }
+
+  footer .footer .footer-logo {
+    grid-column: 1;
+    margin-bottom: 0;
+    text-align: right;
+  }
+
+  footer .footer .footer-logo img {
+    padding-top: 8%;
+  }
+
+  footer .footer .footer-legal {
+    grid-column: 3;
+  }
+
+  footer .footer .footer-social {
+    grid-column: 4;
+  }
+
+  footer .footer .footer-extra {
+    grid-column: 1 / -1;
+  }
+
+  footer .footer ul {
+    margin-bottom: 0;
+  }
+
+  footer .footer .footer-social-list {
+    justify-content: flex-end;
+  }
+
+  footer .footer li a:any-link,
+  footer .footer li a:hover {
+    font-size: var(--body-font-size-xs);
+    line-height: var(--body-font-size-xs);
   }
 }

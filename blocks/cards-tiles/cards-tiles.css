@@ -1,0 +1,450 @@
+/*
+ * cards-tiles: image tiles with a dark caption box (A UN CLIC and agenda on www.madrid.es).
+ * Values come from source computed styles (migration-work/cards-tiles-extracted.css).
+ * Mobile: image beside a full-height caption. >= 600px: caption over the bottom of the image.
+ */
+
+/* ---------- tiles (mobile base) ---------- */
+.cards-tiles > ul {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cards-tiles .cards-tiles-tile {
+  position: relative;
+  display: grid;
+  grid-template-columns: 36.6% 63.4%;
+  overflow: hidden;
+  font-family: var(--body-font-family);
+}
+
+.cards-tiles .cards-tiles-tile-image {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.cards-tiles .cards-tiles-tile-image picture,
+.cards-tiles .cards-tiles-tile-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cards-tiles .cards-tiles-tile-image img {
+  object-fit: cover;
+}
+
+.cards-tiles .cards-tiles-tile-caption {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  background-color: rgb(0 0 0 / 80%);
+  color: #fff;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: left;
+  overflow-wrap: break-word;
+  transition: background-color 0.2s;
+}
+
+.cards-tiles .cards-tiles-tile-no-image .cards-tiles-tile-caption {
+  grid-column: 1 / -1;
+  min-height: 130px;
+}
+
+.cards-tiles .cards-tiles-tile-caption > * {
+  margin: 0;
+}
+
+.cards-tiles .cards-tiles-tile-caption a:any-link {
+  color: #fff;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.cards-tiles .cards-tiles-tile:hover .cards-tiles-tile-caption,
+.cards-tiles .cards-tiles-tile:focus-within .cards-tiles-tile-caption {
+  background-color: #000;
+}
+
+.cards-tiles .cards-tiles-tile-link:focus-visible {
+  outline: none;
+}
+
+.cards-tiles .cards-tiles-tile:focus-within {
+  outline: 2px solid var(--madrid-blue);
+  outline-offset: 2px;
+}
+
+/* whole tile is clickable through the caption link */
+.cards-tiles .cards-tiles-tile-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+/* agenda tiles: 18px apart on mobile */
+main .section.widget-calendar-container .cards-tiles > ul {
+  gap: 18px;
+}
+
+/* ---------- A UN CLIC: "Gestiones y trámites" panel (section default content) ---------- */
+main > .section.split.cards-tiles-container > .default-content-wrapper > :is(p, h3, ul) {
+  margin: 0;
+}
+
+/* linked laptop image and h3: desktop only */
+main > .section.split.cards-tiles-container > .default-content-wrapper > p:has(picture),
+main > .section.split.cards-tiles-container > .default-content-wrapper > h3 {
+  display: none;
+}
+
+/* SEDE ELECTRÓNICA + gradient rule */
+main > .section.split.cards-tiles-container > .default-content-wrapper > h3 + p {
+  padding: 18px 0 10px;
+  background-color: var(--madrid-blue);
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: 19px;
+  line-height: 19px;
+  text-align: center;
+}
+
+main > .section.split.cards-tiles-container > .default-content-wrapper > h3 + p::after {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-top: 14px;
+  background-image: linear-gradient(to right, rgb(8 123 187) 0, rgb(34 137 194) 10%, rgb(82 163 208) 21%, rgb(102 173 213) 31%, rgb(102 173 213) 75%, rgb(93 169 211) 79%, rgb(27 133 192) 92%, rgb(11 125 188) 97%, rgb(5 122 186) 100%);
+  box-shadow: rgb(0 83 150) 0 1px 1px 0;
+}
+
+main > .section.split.cards-tiles-container > .default-content-wrapper > ul {
+  padding: 1px 0 5px;
+  background-color: var(--madrid-blue);
+  list-style: none;
+}
+
+main > .section.split.cards-tiles-container > .default-content-wrapper > ul > li {
+  padding: 10px 5px;
+  line-height: 16px;
+  text-align: center;
+}
+
+main > .section.split.cards-tiles-container > .default-content-wrapper > ul > li > a:any-link {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+main > .section.split.cards-tiles-container > .default-content-wrapper > ul > li > a:hover,
+main > .section.split.cards-tiles-container > .default-content-wrapper > ul > li > a:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* "Ver todos" with the AytMadIcons "S" arrow in a blue disc */
+main > .section.split.cards-tiles-container > .default-content-wrapper > p:last-child {
+  display: block;
+  padding: 20px 0;
+  background-color: rgb(233 233 233);
+  text-align: center;
+}
+
+main > .section.split.cards-tiles-container > .default-content-wrapper > p:last-child a:any-link {
+  display: block;
+  margin: 0 0 10px;
+  padding: 0 10px 0 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--madrid-blue);
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 40px;
+  text-decoration: none;
+  white-space: normal;
+}
+
+main > .section.split.cards-tiles-container > .default-content-wrapper > p:last-child a:hover,
+main > .section.split.cards-tiles-container > .default-content-wrapper > p:last-child a:focus-visible {
+  border: 0;
+  background: none;
+  color: var(--madrid-blue);
+  text-decoration: underline;
+}
+
+main > .section.split.cards-tiles-container > .default-content-wrapper > p:last-child a::after {
+  content: "S";
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin-left: 15px;
+  border-radius: 50%;
+  background-color: var(--madrid-blue);
+  color: #fff;
+  font-family: var(--icon-font-family);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 40px;
+  text-align: center;
+  text-indent: 2px;
+  text-transform: none;
+  vertical-align: middle;
+}
+
+/* ---------- agenda section: background and spacing ---------- */
+main > .section.widget-calendar-container.cards-tiles-container {
+  padding-bottom: 18px;
+  background: url("images/bg-actualidad.webp") 50% 0 / contain no-repeat;
+}
+
+main > .section.widget-calendar-container.cards-tiles-container > .default-content-wrapper:first-child > :is(h2, h3):first-child {
+  padding-top: 18px;
+  padding-bottom: 45px;
+}
+
+main > .section.widget-calendar-container.cards-tiles-container > .cards-tiles-wrapper {
+  margin-top: 8px;
+}
+
+main > .section.widget-calendar-container.cards-tiles-container > .default-content-wrapper:last-child > ul {
+  margin-top: 10px;
+}
+
+/* ---------- tablet ---------- */
+@media (width >= 600px) {
+  .cards-tiles > ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* image and caption stacked in one grid cell (not absolutely positioned), so the
+     caption link's stretched ::after still covers the whole tile */
+  .cards-tiles .cards-tiles-tile {
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    height: 170px;
+  }
+
+  .cards-tiles .cards-tiles-tile-image {
+    grid-area: 1 / 1;
+    aspect-ratio: auto;
+  }
+
+  .cards-tiles .cards-tiles-tile-image img {
+    object-position: 50% 0;
+  }
+
+  /* min-height: captions grow upwards instead of clipping when users enlarge text spacing */
+  .cards-tiles .cards-tiles-tile-caption {
+    grid-area: 1 / 1;
+    place-self: end start;
+    z-index: 1;
+    width: 100%;
+    min-height: 60px;
+    background-color: rgb(0 0 0 / 70%);
+    font-size: 15px;
+    line-height: 15px;
+  }
+
+  /* no image: the caption fills the tile */
+  .cards-tiles .cards-tiles-tile-no-image .cards-tiles-tile-caption {
+    min-height: 100%;
+  }
+
+  /* agenda tiles: 2 columns beside the calendar */
+  main .section.widget-calendar-container .cards-tiles > ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 8px;
+  }
+
+  main .section.widget-calendar-container .cards-tiles .cards-tiles-tile-caption {
+    width: 73%;
+    min-height: 72px;
+    font-size: 14px;
+    line-height: 14px;
+  }
+
+  /* A UN CLIC: panel column beside the tiles */
+  main > .section.split.cards-tiles-container {
+    display: grid;
+    grid-template-columns: calc((100% + 10px) / 3 - 10px) minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr auto;
+    column-gap: 10px;
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 15px 45px;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper {
+    display: contents;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > * {
+    grid-column: 1;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > h2 {
+    grid-column: 1 / -1;
+  }
+
+  main > .section.split.cards-tiles-container > .cards-tiles-wrapper {
+    grid-column: 2;
+    grid-row: 2 / -1;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > h3 + p {
+    padding-top: 17px;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > ul {
+    min-height: 392px;
+    padding-bottom: 6px;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > ul > li {
+    padding: 7px 5px;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > ul > li > a:any-link {
+    font-size: 15px;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > p:last-child {
+    padding: 16px 0;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > p:last-child a:any-link {
+    display: inline-block;
+    margin: 0;
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > p:last-child a::after {
+    width: 30px;
+    height: 30px;
+    margin-left: 7px;
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  /* agenda: tiles (left half) beside the calendar (right half) */
+  main > .section.widget-calendar-container.cards-tiles-container {
+    display: grid;
+    background-size: cover;
+    grid-template-columns: minmax(7px, 1fr) minmax(0, 470px) minmax(0, 470px) minmax(7px, 1fr);
+    column-gap: 8px;
+    align-items: start;
+  }
+
+  main > .section.widget-calendar-container.cards-tiles-container > div {
+    grid-column: 2 / 4;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  main > .section.widget-calendar-container.cards-tiles-container > .cards-tiles-wrapper {
+    grid-area: 2 / 2;
+    margin: 0;
+  }
+
+  main > .section.widget-calendar-container.cards-tiles-container > .widget-calendar-wrapper {
+    grid-area: 2 / 3;
+  }
+
+  main > .section.widget-calendar-container.cards-tiles-container > .default-content-wrapper:first-child > :is(h2, h3):first-child {
+    padding-bottom: 30px;
+  }
+}
+
+/* ---------- desktop ---------- */
+@media (width >= 900px) {
+  .cards-tiles .cards-tiles-tile {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .cards-tiles .cards-tiles-tile-caption {
+    width: 73%;
+    min-height: 84px;
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  main .section.widget-calendar-container .cards-tiles > ul {
+    gap: 10px;
+  }
+
+  main .section.widget-calendar-container .cards-tiles .cards-tiles-tile-caption {
+    min-height: 84px;
+    font-size: 17px;
+    line-height: 17px;
+  }
+
+  main > .section.split.cards-tiles-container {
+    grid-template-columns: calc((100% + 10px) / 4 - 10px) minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto 1fr auto;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > p:has(picture) {
+    display: block;
+    padding: 21px 0 3px;
+    background-color: var(--madrid-blue);
+    line-height: 0;
+    text-align: center;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > p:has(picture) img {
+    width: 140px;
+    height: auto;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > h3 {
+    display: block;
+    padding: 17px 5px 9px;
+    background-color: var(--madrid-blue);
+    color: #fff;
+    font-family: var(--heading-font-family);
+    font-size: 20.625px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > h3 a:any-link {
+    color: #fff;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > h3 + p {
+    padding-top: 0;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > ul {
+    padding-bottom: 5px;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > ul > li {
+    padding: 8px 5px;
+  }
+
+  main > .section.split.cards-tiles-container > .default-content-wrapper > p:last-child {
+    padding: 20px 0;
+  }
+
+  main > .section.widget-calendar-container.cards-tiles-container {
+    grid-template-columns: minmax(5px, 1fr) minmax(0, 470px) minmax(0, 470px) minmax(5px, 1fr);
+    column-gap: 10px;
+  }
+}

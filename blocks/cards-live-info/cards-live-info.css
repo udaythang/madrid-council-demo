@@ -1,0 +1,197 @@
+/* "Madrid al minuto" live info boxes (source .al-minuto). Mobile first */
+
+/* section: source .al-minuto box, padding 2em (34px) and a 10px page gutter on mobile */
+main > .section.cards-live-info-container {
+  padding: 34px 0 51px;
+}
+
+main > .section.cards-live-info-container > div {
+  padding: 0 44px;
+}
+
+/* cards */
+.cards-live-info {
+  font-family: var(--heading-font-family);
+  font-size: 17px;
+  line-height: 1;
+  color: var(--text-color);
+}
+
+.cards-live-info > ul {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 17px 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cards-live-info .cards-live-info-card {
+  position: relative;
+  box-sizing: border-box;
+  height: 218px;
+  padding: 25.5px 17px 17px;
+  background-color: var(--madrid-grey-light);
+}
+
+/* weather image (source .image: absolute, margin-top 25px) */
+.cards-live-info .cards-live-info-card-icon {
+  position: absolute;
+  top: 50.5px;
+  left: 17px;
+  line-height: 0;
+}
+
+.cards-live-info .cards-live-info-card-icon img {
+  width: auto;
+  height: 40px;
+}
+
+/* source .content-box margin-top 70px */
+.cards-live-info .cards-live-info-card-body {
+  margin-top: 70px;
+}
+
+.cards-live-info .cards-live-info-card-body p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.cards-live-info .cards-live-info-card-body p:has(> .cards-live-info-card-title) {
+  margin-bottom: 12px;
+}
+
+.cards-live-info a.cards-live-info-card-title:any-link {
+  display: block;
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.24px;
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.cards-live-info a.cards-live-info-card-title:hover,
+.cards-live-info a.cards-live-info-card-title:focus-visible {
+  text-decoration: none;
+}
+
+/* AytMadIcons glyphs (source .content-box.air-quality / .traffic ::after) */
+.cards-live-info .cards-live-info-card[data-key="calidad-del-aire"]::after,
+.cards-live-info .cards-live-info-card[data-key="situacion-del-trafico"]::after {
+  position: absolute;
+  top: 53.5px;
+  left: 17px;
+  font-family: var(--icon-font-family);
+  font-size: 40px;
+  line-height: 1;
+  color: #000;
+  text-transform: none;
+}
+
+.cards-live-info .cards-live-info-card[data-key="calidad-del-aire"]::after {
+  content: "5";
+}
+
+.cards-live-info .cards-live-info-card[data-key="situacion-del-trafico"]::after {
+  content: "4";
+}
+
+/* Muévete por Madrid logo (source sprite frame 0 -256px, 86x35) */
+.cards-live-info .cards-live-info-card[data-key="muevete-por-madrid"]::after {
+  content: "";
+  position: absolute;
+  top: 52px;
+  left: 17px;
+  width: 86px;
+  height: 35px;
+  background: url("images/move-across.png") no-repeat 0 0;
+}
+
+/* status slot (hidden until a live value is set) */
+.cards-live-info .cards-live-info-card-status {
+  position: absolute;
+  top: 53.5px;
+  right: 17px;
+}
+
+/* hover: whole box turns blue (source .items:hover) */
+.cards-live-info .cards-live-info-card:hover,
+.cards-live-info .cards-live-info-card:focus-within {
+  background-color: var(--madrid-blue);
+  color: #fff;
+}
+
+.cards-live-info .cards-live-info-card:hover a.cards-live-info-card-title:any-link,
+.cards-live-info .cards-live-info-card:focus-within a.cards-live-info-card-title:any-link,
+.cards-live-info .cards-live-info-card:hover::after,
+.cards-live-info .cards-live-info-card:focus-within::after {
+  color: #fff;
+}
+
+.cards-live-info .cards-live-info-card[data-key="muevete-por-madrid"]:hover::after,
+.cards-live-info .cards-live-info-card[data-key="muevete-por-madrid"]:focus-within::after {
+  background-image: url("images/move-across-hover.png");
+}
+
+/* heading and date (default content above the block) */
+main .section.cards-live-info-container .default-content-wrapper > h2 {
+  font-family: var(--heading-font-family);
+  font-size: 42.5px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--heading-color);
+  text-align: center;
+}
+
+/* source p.date is .hidden-xs */
+main .section.cards-live-info-container .default-content-wrapper > p {
+  display: none;
+  margin: 14px 0 11px 17px;
+  font-family: var(--heading-font-family);
+  font-size: 25.5px;
+  line-height: 1;
+  color: #000;
+}
+
+main .section.cards-live-info-container .cards-live-info-date-muted {
+  font-size: 18px;
+  color: #666;
+}
+
+@media (width >= 600px) {
+  main > .section.cards-live-info-container > div {
+    padding: 0 30px;
+  }
+
+  main .section.cards-live-info-container .default-content-wrapper > h2 {
+    padding: 30px 0;
+    text-align: start;
+  }
+
+  main .section.cards-live-info-container .default-content-wrapper > p {
+    display: block;
+  }
+
+  .cards-live-info > ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 900px) {
+  .cards-live-info > ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 1200px) {
+  main > .section.cards-live-info-container > div {
+    padding: 0;
+  }
+
+  main .section.cards-live-info-container .default-content-wrapper > h2 {
+    padding: 60px 0 30px var(--heading-indent);
+  }
+}
