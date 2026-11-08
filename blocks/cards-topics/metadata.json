@@ -1,0 +1,24 @@
+{
+  "variantName": "cards-topics",
+  "baseBlock": "cards",
+  "canonicalModel": "collection",
+  "visualCharacteristics": {
+    "purpose": "row of small icon tiles linking to the site topic sections",
+    "summary": "Small square solid-blue icon tiles with only a link label, in one row of 9."
+  },
+  "contentPattern": {
+    "structure": "one cell: an :icon: token (e.g. :economiayhacienda:) and a link",
+    "rows": [
+      [
+        "Text: :icon: token and link"
+      ]
+    ],
+    "columns": 1,
+    "notes": "Repeating look-alike items (icon and link) that flow and wrap, and become a carousel on mobile. The icons are icon-font glyphs, so this uses the no-images card model."
+  },
+  "options": [],
+  "memberVariantIds": [],
+  "usage": "Topic or category navigation tiles with an icon glyph and a short link label. Swipe carousel on mobile, single row on desktop.",
+  "reuseGuidance": "Reuse for icon-plus-label link tiles without photos. Use cards-features when each item also has a heading and text.",
+  "sourceUrl": "https://www.madrid.es/portal/site/munimadrid"
+}

@@ -1,0 +1,304 @@
+/* tabs-profiles: "LO QUE TE INTERESA" (source .te_interesa_content .tabspanel) */
+.tabs-profiles {
+  margin: 0 calc(-1 * var(--section-gutter));
+  color: var(--text-color);
+}
+
+/* tab band: full-bleed #f1f1f1 strip, tabs of 50% / 33.333% / 25% */
+.tabs-profiles .tabs-profiles-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 0 20px;
+  background-color: var(--madrid-grey-panel);
+  box-shadow: 0 0 0 100vmax var(--madrid-grey-panel);
+  clip-path: inset(0 -100vmax);
+}
+
+.tabs-profiles .tabs-profiles-tab {
+  position: relative;
+  flex: 0 0 50%;
+  min-width: 0;
+  margin: 0;
+  padding: 22px 6px;
+  border: 1px solid var(--madrid-grey-panel);
+  border-radius: 0;
+  background: transparent;
+  color: var(--madrid-blue);
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 100;
+  line-height: 34.2857px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.tabs-profiles .tabs-profiles-tab:hover {
+  border-color: var(--madrid-grey-panel);
+  background-color: var(--madrid-grey-panel);
+}
+
+.tabs-profiles .tabs-profiles-tab:focus-visible {
+  background-color: rgb(238 238 238);
+  outline: 5px auto;
+  outline-offset: -2px;
+}
+
+.tabs-profiles .tabs-profiles-tab[aria-selected="true"] {
+  border-color: var(--madrid-blue);
+  background-color: var(--madrid-blue);
+  color: #fff;
+  cursor: default;
+}
+
+/* active tab arrow */
+.tabs-profiles .tabs-profiles-tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: -11px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -11px;
+  border-top: 11px solid var(--madrid-blue);
+  border-right: 11px solid transparent;
+  border-left: 11px solid transparent;
+}
+
+.tabs-profiles.tabs-profiles-single .tabs-profiles-list {
+  display: none;
+}
+
+.tabs-profiles .tabs-profiles-panel {
+  position: relative;
+  padding: 0;
+}
+
+.tabs-profiles .tabs-profiles-panel[hidden] {
+  display: none;
+}
+
+.tabs-profiles .tabs-profiles-panel:focus-visible {
+  outline: 2px solid var(--link-color);
+  outline-offset: -2px;
+}
+
+/* "Para ti": full-bleed #f1f1f1 panel with a row of profile photos */
+.tabs-profiles .tabs-profiles-panel-profiles {
+  padding: 0 0 40px;
+  background-color: var(--madrid-grey-panel);
+  box-shadow: 0 0 0 100vmax var(--madrid-grey-panel);
+  clip-path: inset(0 -100vmax);
+}
+
+.tabs-profiles .tabs-profiles-items {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 146px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.tabs-profiles .tabs-profiles-items::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs-profiles .tabs-profiles-items > li {
+  min-width: 0;
+  padding: 30px 0 40px;
+  text-align: center;
+  scroll-snap-align: start;
+}
+
+.tabs-profiles .tabs-profiles-items > li > p {
+  margin: 0;
+}
+
+/* the photo paragraph: 146px circular PNG plus the source's 14px/16px gap below */
+.tabs-profiles .tabs-profiles-items > li > p:has(picture) {
+  margin-bottom: 17px;
+  line-height: 0;
+}
+
+.tabs-profiles .tabs-profiles-items picture {
+  display: block;
+}
+
+.tabs-profiles .tabs-profiles-items img {
+  display: block;
+  width: 146px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.tabs-profiles .tabs-profiles-items a:any-link,
+main .tabs-profiles .tabs-profiles-items a.button:any-link {
+  color: var(--text-color);
+  font-family: var(--heading-font-family);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 20px;
+  text-decoration: none;
+  overflow-wrap: normal;
+}
+
+.tabs-profiles .tabs-profiles-items a:hover,
+.tabs-profiles .tabs-profiles-items a:focus-visible,
+main .tabs-profiles .tabs-profiles-items a.button:hover,
+main .tabs-profiles .tabs-profiles-items a.button:focus-visible {
+  color: rgb(0 0 225);
+  text-decoration: underline;
+}
+
+/* carousel dots (only when the row overflows) */
+.tabs-profiles .tabs-profiles-dots {
+  position: absolute;
+  z-index: 1;
+  bottom: 16px;
+  left: 50%;
+  display: flex;
+  column-gap: 16px;
+  transform: translateX(-50%);
+}
+
+.tabs-profiles .tabs-profiles-dots[hidden] {
+  display: none;
+}
+
+.tabs-profiles .tabs-profiles-dot {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #999;
+  border-radius: 50%;
+  background-color: #fff;
+  opacity: 0.75;
+  transition: opacity ease 250ms;
+  cursor: pointer;
+}
+
+.tabs-profiles .tabs-profiles-dot:hover,
+.tabs-profiles .tabs-profiles-dot:focus-visible {
+  opacity: 1;
+}
+
+.tabs-profiles .tabs-profiles-dot.active {
+  background-color: var(--madrid-blue);
+}
+
+/* "En tu distrito": district link list (source list view) */
+.tabs-profiles .tabs-profiles-panel-links {
+  background-color: var(--madrid-grey-panel);
+  box-shadow: 0 0 0 100vmax var(--madrid-grey-panel);
+  clip-path: inset(0 -100vmax);
+}
+
+.tabs-profiles .tabs-profiles-panel-links ul,
+.tabs-profiles .tabs-profiles-panel-links ol {
+  margin: 0;
+  padding: 12px 10px 30px;
+  list-style: none;
+}
+
+.tabs-profiles .tabs-profiles-panel-links li {
+  display: flow-root;
+  margin: 0;
+  padding: 0;
+}
+
+.tabs-profiles .tabs-profiles-panel-links li a:any-link,
+main .tabs-profiles .tabs-profiles-panel-links li a.button:any-link {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 1px 0;
+  padding: 8px 10px 10px;
+  color: var(--madrid-blue);
+  font-family: var(--body-font-family);
+  font-size: 20px;
+  line-height: 20px;
+  text-decoration: none;
+}
+
+.tabs-profiles .tabs-profiles-panel-links li a:hover,
+.tabs-profiles .tabs-profiles-panel-links li a:focus-visible,
+main .tabs-profiles .tabs-profiles-panel-links li a.button:hover,
+main .tabs-profiles .tabs-profiles-panel-links li a.button:focus-visible {
+  background-color: var(--madrid-blue);
+  color: #fff;
+  text-decoration: none;
+}
+
+@media (width >= 600px) {
+  .tabs-profiles .tabs-profiles-tab {
+    flex-basis: 33.3333%;
+  }
+
+  .tabs-profiles .tabs-profiles-items {
+    grid-auto-columns: minmax(146px, 1fr);
+  }
+
+  .tabs-profiles .tabs-profiles-items > li {
+    padding: 60px 0 50px;
+  }
+
+  .tabs-profiles .tabs-profiles-items > li > p:has(picture) {
+    margin-bottom: 19px;
+  }
+
+  /* list view sits on the page, 4 columns in row order */
+  .tabs-profiles .tabs-profiles-panel-links {
+    background-color: transparent;
+    box-shadow: none;
+    clip-path: none;
+  }
+
+  .tabs-profiles .tabs-profiles-panel-links ul,
+  .tabs-profiles .tabs-profiles-panel-links ol {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 28px -5px 70px;
+    padding: 0;
+  }
+
+  .tabs-profiles .tabs-profiles-panel-links li {
+    padding: 0 5px;
+  }
+
+  .tabs-profiles .tabs-profiles-panel-links li a:any-link,
+  main .tabs-profiles .tabs-profiles-panel-links li a.button:any-link {
+    width: 160px;
+    max-width: 100%;
+    margin: 3px 0;
+    padding: 5px 10px;
+    font-size: 14px;
+    line-height: 14px;
+  }
+}
+
+@media (width >= 900px) {
+  .tabs-profiles {
+    margin: 0;
+  }
+
+  .tabs-profiles .tabs-profiles-tab {
+    flex-basis: 25%;
+  }
+
+  /* source item columns are 186px wide inside the 950px container */
+  .tabs-profiles .tabs-profiles-items > li {
+    padding-inline: 2px;
+  }
+}
+
+/* source: the heading area of this section is white; only the panels are grey */
+main > .section.tabs-profiles-container {
+  padding-bottom: 0;
+  background-color: transparent;
+}

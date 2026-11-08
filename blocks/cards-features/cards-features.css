@@ -1,0 +1,188 @@
+/* Descubre el Madrid que te gusta (source .tu-formas-parte, ul.carouselFormasParteReajustado) */
+
+/* section band: source .bg-fluid8 is #f1f1f1 and ends flush with the list */
+main .section.cards-features-container {
+  background-color: var(--madrid-grey-panel);
+  padding-bottom: 0;
+}
+
+/* source: .tu-formas-parte padding-top 40px + h2.title5 padding 18px 0 30px */
+main .section.cards-features-container > .default-content-wrapper > h2 {
+  padding: 58px 5px 30px;
+}
+
+.cards-features {
+  position: relative;
+  color: var(--text-color);
+}
+
+/* mobile: swipe carousel (source: -webkit-inline-box, items 25% / min 170px) */
+.cards-features > ul {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 30px 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.cards-features > ul::-webkit-scrollbar {
+  display: none;
+}
+
+.cards-features .cards-features-item {
+  flex: 0 0 25%;
+  min-width: 170px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  scroll-snap-align: start;
+}
+
+/* white round badge with the AytMadIcons glyph */
+.cards-features .cards-features-item-icon {
+  position: relative;
+  display: block;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.cards-features .cards-features-glyph {
+  position: absolute;
+  top: 20%;
+  left: 22%;
+  font-family: var(--icon-font-family);
+  font-size: 40px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 100%;
+  color: var(--madrid-blue);
+  text-transform: none;
+  speak: never;
+}
+
+.cards-features .cards-features-icon-tramites .cards-features-glyph {
+  top: 20%;
+  left: 22%;
+  font-size: 41px;
+}
+
+.cards-features .cards-features-icon-comparte .cards-features-glyph {
+  top: 24%;
+  left: 25%;
+  font-size: 36px;
+}
+
+.cards-features .cards-features-icon-opina .cards-features-glyph {
+  top: 18%;
+  left: 17%;
+  font-size: 47px;
+}
+
+/* authored picture fallback */
+.cards-features .cards-features-item-icon picture,
+.cards-features .cards-features-item-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cards-features .cards-features-item-body h3 {
+  margin: 0;
+  padding: 5px 0;
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--text-color);
+}
+
+.cards-features .cards-features-item-body p {
+  margin: 0;
+  padding: 10px 22px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  line-height: 19.25px;
+  color: #000;
+}
+
+.cards-features .cards-features-item-body a:any-link {
+  color: var(--madrid-blue);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.cards-features .cards-features-item-body a:hover,
+.cards-features .cards-features-item-body a:focus-visible {
+  text-decoration: underline;
+}
+
+/* carousel pagination (source .navItem1FormasParte / .navItem2FormasParte) */
+.cards-features .cards-features-dots {
+  position: absolute;
+  bottom: 17px;
+  left: 50%;
+  display: flex;
+  gap: 16px;
+  transform: translateX(-50%);
+}
+
+.cards-features .cards-features-dots[hidden] {
+  display: none;
+}
+
+.cards-features .cards-features-dot {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #999;
+  border-radius: 50%;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.cards-features .cards-features-dot.active {
+  background-color: var(--madrid-blue);
+}
+
+.cards-features .cards-features-dot:focus-visible {
+  outline: 3px solid #000;
+}
+
+@media (width >= 600px) {
+  main .section.cards-features-container > .default-content-wrapper > h2 {
+    padding: 58px 0 30px;
+  }
+
+  .cards-features > ul {
+    margin: 0 10px;
+    padding: 0 0 30px;
+  }
+
+  .cards-features.is-carousel > ul {
+    padding-bottom: 46px;
+  }
+}
+
+@media (width >= 900px) {
+  .cards-features > ul {
+    justify-content: center;
+  }
+}
+
+@media (width >= 1200px) {
+  /* source list is 960px wide inside the 950px container (row margin 0 -5px) */
+  .cards-features > ul {
+    margin: 0 -5px;
+  }
+}

@@ -1,0 +1,272 @@
+/* widget-calendar: today panel + month date picker (source: .actividades .calendario) */
+.widget-calendar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  background-color: rgb(255 255 255 / 80%);
+  color: var(--text-color);
+  font-family: var(--heading-font-family);
+}
+
+/* today panel: hidden below desktop, as on the source */
+.widget-calendar .widget-calendar-today {
+  display: none;
+  padding: 8px 0;
+  color: var(--madrid-burgundy);
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  text-align: center;
+}
+
+.widget-calendar .widget-calendar-today > span {
+  display: block;
+}
+
+.widget-calendar .widget-calendar-today-weekday {
+  font-size: 36px;
+  line-height: 36px;
+}
+
+.widget-calendar .widget-calendar-today-day {
+  font-size: 150px;
+  line-height: 128px;
+}
+
+.widget-calendar .widget-calendar-today-month {
+  font-size: 40px;
+  line-height: 40px;
+  text-transform: uppercase;
+}
+
+/* month picker */
+.widget-calendar .widget-calendar-month {
+  min-width: 0;
+  margin: 20px 0;
+}
+
+.widget-calendar .widget-calendar-month-header {
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.widget-calendar .widget-calendar-month-title {
+  color: var(--madrid-burgundy);
+  font-family: var(--heading-font-family);
+  font-size: 35px;
+  font-weight: 400;
+  line-height: 35px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.widget-calendar .widget-calendar-nav,
+.widget-calendar .widget-calendar-day {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* arrows: AytMadIcons "|" (prev) and "S" (next); the button text stays for no-font fallback only */
+.widget-calendar .widget-calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 35px;
+  font-size: 0;
+  line-height: 0;
+}
+
+.widget-calendar .widget-calendar-nav::before {
+  color: var(--madrid-burgundy);
+  font-family: var(--icon-font-family);
+  font-size: 25px;
+  line-height: 35px;
+  text-transform: none;
+}
+
+.widget-calendar .widget-calendar-prev::before {
+  content: "|";
+}
+
+.widget-calendar .widget-calendar-next::before {
+  content: "S";
+}
+
+.widget-calendar .widget-calendar-nav:hover,
+.widget-calendar .widget-calendar-nav:focus-visible {
+  background-color: rgb(238 238 238);
+}
+
+.widget-calendar .widget-calendar-grid {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: center;
+}
+
+.widget-calendar .widget-calendar-grid th,
+.widget-calendar .widget-calendar-grid td {
+  border: 0;
+  background: none;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.widget-calendar .widget-calendar-grid th {
+  padding: 0 0 10px;
+  color: var(--heading-color);
+  font-family: var(--heading-font-family);
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 23px;
+}
+
+.widget-calendar .widget-calendar-grid td {
+  padding: 0;
+}
+
+.widget-calendar .widget-calendar-day {
+  position: relative;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  padding: 5px;
+  color: #000;
+  font-family: var(--heading-font-family);
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.widget-calendar .widget-calendar-day:hover,
+.widget-calendar .widget-calendar-day:focus-visible {
+  background-color: rgb(238 238 238);
+}
+
+/* past days and days of the adjacent months are greyed, as the source's disabled/old/new days */
+.widget-calendar .widget-calendar-past .widget-calendar-day,
+.widget-calendar .widget-calendar-outside .widget-calendar-day {
+  color: rgb(105 105 105);
+}
+
+/* today: white number on a filled burgundy circle */
+.widget-calendar .widget-calendar-is-today .widget-calendar-day {
+  color: #fff;
+}
+
+.widget-calendar .widget-calendar-is-today .widget-calendar-day:hover,
+.widget-calendar .widget-calendar-is-today .widget-calendar-day:focus-visible {
+  background: none;
+}
+
+.widget-calendar .widget-calendar-is-today .widget-calendar-day::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  border-radius: 50%;
+  background-color: var(--madrid-burgundy);
+}
+
+/* tablet: compact picker (source 768-991px) */
+@media (width >= 600px) {
+  .widget-calendar .widget-calendar-month {
+    margin: 4px 0 0;
+  }
+
+  .widget-calendar .widget-calendar-month-header {
+    padding-bottom: 0;
+  }
+
+  .widget-calendar .widget-calendar-month-title {
+    font-size: 25px;
+    line-height: 25px;
+  }
+
+  .widget-calendar .widget-calendar-nav {
+    height: 25px;
+  }
+
+  .widget-calendar .widget-calendar-nav::before {
+    font-size: 18px;
+    line-height: 25px;
+  }
+
+  .widget-calendar .widget-calendar-grid th {
+    height: 20px;
+    padding: 0;
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  .widget-calendar .widget-calendar-day {
+    padding: 3px;
+    font-size: 14px;
+    line-height: 14px;
+  }
+
+  .widget-calendar .widget-calendar-is-today .widget-calendar-day::after {
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+  }
+}
+
+/* desktop: today panel beside the picker (source >=992px) */
+@media (width >= 900px) {
+  .widget-calendar {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 10px;
+    align-items: start;
+  }
+
+  .widget-calendar .widget-calendar-today {
+    display: block;
+  }
+
+  .widget-calendar .widget-calendar-month {
+    margin: 8px 0 0;
+  }
+
+  .widget-calendar .widget-calendar-month-header {
+    padding-bottom: 12px;
+  }
+
+  .widget-calendar .widget-calendar-month-title {
+    font-size: 28px;
+    line-height: 28px;
+  }
+
+  .widget-calendar .widget-calendar-nav {
+    height: 28px;
+  }
+
+  .widget-calendar .widget-calendar-nav::before {
+    font-size: 21px;
+    line-height: 28px;
+  }
+
+  .widget-calendar .widget-calendar-grid th {
+    height: auto;
+    padding: 0 0 12px;
+    font-size: 18px;
+    line-height: 18px;
+  }
+
+  .widget-calendar .widget-calendar-day {
+    padding: 5px;
+    font-size: 15px;
+    line-height: 15px;
+  }
+}

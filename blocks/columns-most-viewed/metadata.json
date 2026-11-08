@@ -1,0 +1,25 @@
+{
+  "variantName": "columns-most-viewed",
+  "baseBlock": "columns",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "purpose": "thin strip with a label beside a single-line, slash-separated rail of links",
+    "summary": "A thin single-line strip: a narrow label tab beside a slash-separated inline link rail."
+  },
+  "contentPattern": {
+    "structure": "one row, two cells: label (Lo más visto); list of links (use full link titles)",
+    "rows": [
+      [
+        "Label",
+        "List of links"
+      ]
+    ],
+    "columns": 2,
+    "notes": "The section hint is block, and the content is a fixed side-by-side pair (label and link list) that never wraps."
+  },
+  "options": [],
+  "memberVariantIds": [],
+  "usage": "Most-viewed or quick-links strip under the header. Links keep their full text in the title tooltip when truncated.",
+  "reuseGuidance": "Reuse for any label + inline link rail. Use the base columns for real side-by-side content.",
+  "sourceUrl": "https://www.madrid.es/portal/site/munimadrid"
+}

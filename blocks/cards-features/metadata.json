@@ -1,0 +1,24 @@
+{
+  "variantName": "cards-features",
+  "baseBlock": "cards",
+  "canonicalModel": "collection",
+  "visualCharacteristics": {
+    "purpose": "centered feature items with a round icon badge, heading and descriptive text",
+    "summary": "Centered items with a round icon badge above an h3 and descriptive text, with no card chrome."
+  },
+  "contentPattern": {
+    "structure": "one cell: an :icon: token (tu-contenido, tramites, comparte, opina), an h3 and a paragraph with links",
+    "rows": [
+      [
+        "Text: :icon:, heading, description with links"
+      ]
+    ],
+    "columns": 1,
+    "notes": "Repeating look-alike items (icon, title, text). The icons are icon-font glyphs, so this uses the no-images card model."
+  },
+  "options": [],
+  "memberVariantIds": [],
+  "usage": "Short value propositions or service features with an icon, title and text. Swipe carousel on mobile.",
+  "reuseGuidance": "Reuse for icon + heading + text items without photos. Use cards-topics for link-only tiles.",
+  "sourceUrl": "https://www.madrid.es/portal/site/munimadrid"
+}

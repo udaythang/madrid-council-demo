@@ -1,0 +1,27 @@
+{
+  "variantName": "hero-seasonal",
+  "baseBlock": "hero",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "purpose": "full-bleed seasonal background photo at the top of the homepage, with optional overlay text",
+    "summary": "Photo only, with no headline or CTA, and it sits behind the global nav and the topic tiles. The vanilla hero is image plus title."
+  },
+  "contentPattern": {
+    "structure": "row 1: background image; row 2 (optional): title, subheading, CTA",
+    "rows": [
+      [
+        "Background image"
+      ],
+      [
+        "Title, subheading, CTA (optional; empty on this page)"
+      ]
+    ],
+    "columns": 1,
+    "notes": "A full-bleed photo background belongs to a hero block, so the section gets no color style."
+  },
+  "options": [],
+  "memberVariantIds": [],
+  "usage": "Top of a landing page when a full-bleed photo carries the section; text is optional and may be left empty.",
+  "reuseGuidance": "Reuse for any photo-led hero, with or without a headline. Use the base hero for a plain image-plus-title hero.",
+  "sourceUrl": "https://www.madrid.es/portal/site/munimadrid"
+}

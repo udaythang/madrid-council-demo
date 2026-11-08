@@ -1,0 +1,52 @@
+/* Madrid City Council (www.madrid.es) brand tokens, from computed source styles */
+:root {
+  /* brand colors */
+  --madrid-blue: #003df6;
+  --madrid-blue-overlay: rgb(0 61 246 / 80%);
+  --madrid-burgundy: #af0c43;
+  --madrid-grey-light: #f4f3f3;
+  --madrid-grey-panel: #f1f1f1;
+  --madrid-grey-text: #333;
+  --madrid-heading-text: #111;
+  --madrid-button-text: #f1f1f1;
+
+  /* semantic colors */
+  --background-color: #fff;
+  --light-color: var(--madrid-grey-light);
+  --dark-color: #505050;
+  --text-color: var(--madrid-grey-text);
+  --heading-color: var(--madrid-heading-text);
+  --link-color: var(--madrid-blue);
+  --link-hover-color: var(--madrid-blue);
+
+  /* fonts */
+  --body-font-family: arial, helvetica, sans-serif;
+  --heading-font-family: lato, lato-fallback, arial, sans-serif;
+  --icon-font-family: aytmadicons;
+  --icon-font-family-2: aytmadicons2;
+
+  /* body sizes */
+  --body-font-size-m: 16px;
+  --body-font-size-s: 14px;
+  --body-font-size-xs: 12px;
+
+  /* heading sizes (source uses the same sizes at every width) */
+  --heading-font-size-xxl: 40px;
+  --heading-font-size-xl: 40px;
+  --heading-font-size-l: 40px;
+  --heading-font-size-m: 25.5px;
+  --heading-font-size-s: 20px;
+  --heading-font-size-xs: 16px;
+
+  /* layout */
+  --content-max-width: 950px;
+  --section-gutter: 10px;
+  --heading-indent: 120px;
+  --nav-height: 64px;
+}
+
+@media (width >= 600px) {
+  :root {
+    --section-gutter: 30px;
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "variantName": "tabs-profiles",
+  "baseBlock": "tabs",
+  "canonicalModel": "collection",
+  "visualCharacteristics": {
+    "purpose": "tabbed panel where one tab shows circular profile photos with links and another a multi-column link list",
+    "summary": "Full-width grey tab band with a solid-blue active tab. The first panel is a row of circular profile photos with uppercase links; the second is a 4-column link list."
+  },
+  "contentPattern": {
+    "structure": "cell 1: tab label; cell 2: tab content (images with links become a profile row; a list becomes a 1-2-4 column link grid)",
+    "rows": [
+      [
+        "Tab label",
+        "Tab content"
+      ]
+    ],
+    "columns": 2,
+    "notes": "An interactive tabbed component. Both tab labels and the full content of both panels are kept."
+  },
+  "options": [],
+  "memberVariantIds": [],
+  "usage": "Lo que te interesa: audience profiles (Para ti) and district links (En tu distrito).",
+  "reuseGuidance": "Reuse for any tabbed content whose panels are photo link rows or long link lists.",
+  "sourceUrl": "https://www.madrid.es/portal/site/munimadrid"
+}

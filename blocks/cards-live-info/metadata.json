@@ -1,0 +1,25 @@
+{
+  "variantName": "cards-live-info",
+  "baseBlock": "cards",
+  "canonicalModel": "collection",
+  "visualCharacteristics": {
+    "purpose": "live city information boxes (weather, air quality, traffic, mobility) with a status slot",
+    "summary": "Light-grey boxes, each an icon, a blue title link and a short line, with a slot for a live status value."
+  },
+  "contentPattern": {
+    "structure": "cell 1 (optional): icon image; cell 2: title link and description; cell 3 (optional): status value",
+    "rows": [
+      [
+        "Icon image (optional)",
+        "Text: title link and description"
+      ]
+    ],
+    "columns": 2,
+    "notes": "Repeating look-alike items. The live values (weather icon, air quality and traffic levels) are fed by JavaScript."
+  },
+  "options": [],
+  "memberVariantIds": [],
+  "usage": "Madrid al minuto: each card links to a live service. The status slot (.cards-live-info-card-status, keyed by li[data-key]) is hidden until a value is authored or set by script.",
+  "reuseGuidance": "Reuse for status/dashboard style link boxes. Use cards-tiles for photo tiles.",
+  "sourceUrl": "https://www.madrid.es/portal/site/munimadrid"
+}

@@ -1,0 +1,24 @@
+{
+  "variantName": "widget-calendar",
+  "baseBlock": "widget",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "purpose": "today panel (weekday, large date, month) beside a month date picker for the events agenda",
+    "summary": "A today panel (day, large date number, month) beside a month datepicker."
+  },
+  "contentPattern": {
+    "structure": "one cell: a link to /widgets/activities-calendar.html; query params (agenda, dateparam, lang) become data attributes",
+    "rows": [
+      [
+        "Link to /widgets/activities-calendar.html (query params become data attributes)"
+      ]
+    ],
+    "columns": 1,
+    "notes": "An interactive JavaScript datepicker tied to the events agenda. No library block fits; the project's widget block loads it from /widgets/."
+  },
+  "options": [],
+  "memberVariantIds": [],
+  "usage": "Agenda date picker. Dates are generated in code; picking a day fires widget-calendar:select and, when agenda is set, navigates to agenda?fecha=yyyy-mm-dd.",
+  "reuseGuidance": "Reuse wherever a date picker should drive an events listing. Use the base widget block to load other /widgets/ embeds.",
+  "sourceUrl": "https://www.madrid.es/portal/site/munimadrid"
+}

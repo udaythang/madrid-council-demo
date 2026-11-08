@@ -1,0 +1,201 @@
+{
+  "metadata": {
+    "projectType": "da"
+  },
+  "templates": [
+    {
+      "name": "homepage",
+      "urls": [
+        "https://www.madrid.es/portal/site/munimadrid"
+      ],
+      "representativeUrl": "https://www.madrid.es/portal/site/munimadrid",
+      "description": "Madrid City Council homepage, imported as /index",
+      "urlPattern": "/portal/site/*",
+      "blocks": [
+        {
+          "name": "hero-seasonal",
+          "instances": [
+            "header.header--main .section-cont img#section-image",
+            "img#section-image"
+          ]
+        },
+        {
+          "name": "cards-topics",
+          "instances": [
+            "header.header--main ul#carouselHomeCorregido > li",
+            "ul#carouselHomeCorregido > li"
+          ]
+        },
+        {
+          "name": "columns-most-viewed",
+          "instances": [
+            "#wrapper > div.bg-fluid1.fluid1--main.navigation-bar--desktop .most-watched",
+            ".navigation-bar--desktop .most-watched"
+          ]
+        },
+        {
+          "name": "cards-news-mosaic",
+          "instances": [
+            ".actualidad div.row > ul > li"
+          ]
+        },
+        {
+          "name": "cards-tiles",
+          "instances": [
+            ".a-un-clic .col-md-9 > ul.row > li",
+            ".actividades ul.row > li.info_relevant-second-row"
+          ]
+        },
+        {
+          "name": "widget-calendar",
+          "instances": [
+            ".actividades .calendario"
+          ]
+        },
+        {
+          "name": "cards-features",
+          "instances": [
+            ".tu-formas-parte ul.carouselFormasParteReajustado > li"
+          ]
+        },
+        {
+          "name": "cards-live-info",
+          "instances": [
+            ".al-minuto ul.row > li"
+          ]
+        },
+        {
+          "name": "tabs-profiles",
+          "instances": [
+            ".te_interesa_content .tabspanel"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "s1",
+          "name": "Seasonal hero and topic tiles",
+          "selector": [
+            "header.header--main .section-cont",
+            "header.header--main .contenedorContenedorCarouselCorregido"
+          ],
+          "style": null,
+          "blocks": [
+            "hero-seasonal",
+            "cards-topics"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "s2",
+          "name": "Lo más visto",
+          "selector": [
+            "#wrapper > div.bg-fluid1.fluid1--main.navigation-bar--desktop",
+            ".navigation-bar--desktop"
+          ],
+          "style": "light-grey",
+          "blocks": [
+            "columns-most-viewed"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "s3",
+          "name": "Es noticia",
+          "selector": [
+            "#wrapper > div.content > div.bg-fluid1",
+            "div.bg-fluid1:has(.actualidad)"
+          ],
+          "style": "light-grey",
+          "blocks": [
+            "cards-news-mosaic"
+          ],
+          "defaultContent": [
+            ".actualidad h2.title4Inicio",
+            ".actualidad .info_relevant_img_ext a",
+            ".actualidad > .container > ul.list-inline"
+          ]
+        },
+        {
+          "id": "s4",
+          "name": "A un clic",
+          "selector": [
+            "div.bg-fluid0:has(.a-un-clic)",
+            "#wrapper > div.content > div.bg-fluid0:nth-of-type(2)"
+          ],
+          "style": "split",
+          "blocks": [
+            "cards-tiles"
+          ],
+          "defaultContent": [
+            ".a-un-clic h2.title4",
+            ".a-un-clic .featured_clic"
+          ]
+        },
+        {
+          "id": "s5",
+          "name": "Y también en tu ciudad (agenda)",
+          "selector": [
+            "div.bg-fluid0:has(.actividades)",
+            "#wrapper > div.content > div.bg-fluid0:nth-of-type(3)"
+          ],
+          "style": null,
+          "blocks": [
+            "widget-calendar",
+            "cards-tiles"
+          ],
+          "defaultContent": [
+            ".actividades h3.actividades__title",
+            ".actividades ul.list-inline"
+          ]
+        },
+        {
+          "id": "s6",
+          "name": "Descubre el Madrid que te gusta",
+          "selector": [
+            "div.Panel:has(.tu-formas-parte)",
+            ".tu-formas-parte"
+          ],
+          "style": "light-grey, centered",
+          "blocks": [
+            "cards-features"
+          ],
+          "defaultContent": [
+            ".tu-formas-parte h2.title5"
+          ]
+        },
+        {
+          "id": "s7",
+          "name": "Madrid al minuto",
+          "selector": [
+            "div.Panel:has(.al-minuto)",
+            ".al-minuto"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-live-info"
+          ],
+          "defaultContent": [
+            ".al-minuto h2.title4",
+            ".al-minuto p.date"
+          ]
+        },
+        {
+          "id": "s8",
+          "name": "Lo que te interesa",
+          "selector": [
+            "div.Panel:has(.te_interesa_content)",
+            ".te_interesa_content"
+          ],
+          "style": "light-grey",
+          "blocks": [
+            "tabs-profiles"
+          ],
+          "defaultContent": [
+            ".te_interesa_content > .container h2.title4"
+          ]
+        }
+      ]
+    }
+  ]
+}

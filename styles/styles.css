@@ -1,3 +1,5 @@
+@import url('brand.css');
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -10,64 +12,13 @@
  * governing permissions and limitations under the License.
  */
 
-:root {
-  /* colors */
-  --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
-
-  /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
-
-  /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
-
-  /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
-
-  /* nav height */
-  --nav-height: 64px;
-}
+/* design tokens (colors, fonts, sizes) live in brand.css */
 
 /* fallback fonts */
 @font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
+  font-family: lato-fallback;
+  size-adjust: 97.38%;
   src: local('Arial');
-}
-
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
-  src: local('Arial');
-}
-
-@media (width >= 900px) {
-  :root {
-    /* body sizes */
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
-
-    /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
-  }
 }
 
 body {
@@ -77,7 +28,7 @@ body {
   color: var(--text-color);
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
-  line-height: 1.6;
+  line-height: 1.375;
 }
 
 body.appear {
@@ -106,9 +57,10 @@ h5,
 h6 {
   margin-top: 0.8em;
   margin-bottom: 0.25em;
+  color: var(--heading-color);
   font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
+  font-weight: 400;
+  line-height: 1;
   scroll-margin: 40px;
 }
 
@@ -162,7 +114,12 @@ a:any-link {
 
 a:hover {
   color: var(--link-hover-color);
-  text-decoration: underline;
+  text-decoration: none;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--link-color);
+  outline-offset: 2px;
 }
 
 /* buttons */
@@ -295,31 +252,122 @@ main img {
   width: 100%;
 }
 
-/* sections */
+/* EDS button reset: authored strong/em links stay links unless a block styles them */
+main .button-wrapper {
+  display: inline;
+}
+
+main a.button:any-link {
+  background: none;
+  border: none;
+  border-radius: 0;
+  color: var(--link-color);
+  font-size: inherit;
+  font-weight: inherit;
+  padding: 0;
+  margin: 0;
+  text-decoration: underline;
+  white-space: normal;
+}
+
+/* sections: full-bleed bands that abut, as on www.madrid.es */
 main > .section {
-  margin: 40px 0;
+  margin: 0;
+  padding: 0 0 45px;
 }
 
 main > .section > div {
-  max-width: 1200px;
+  max-width: var(--content-max-width);
   margin: auto;
-  padding: 0 24px;
+  padding: 0 var(--section-gutter);
 }
 
 main > .section:first-of-type {
   margin-top: 0;
 }
 
-@media (width >= 900px) {
-  main > .section > div {
-    padding: 0 32px;
+/* default-content headings: Lato 40px, source title4 / title5; centred on phones */
+main > .section > .default-content-wrapper > h2,
+main > .section > .default-content-wrapper > h3:first-child {
+  margin: 0;
+  padding: 30px 0 20px;
+  font-size: var(--heading-font-size-xl);
+  text-align: center;
+}
+
+main > .section.cards-news-mosaic-container > .default-content-wrapper > h2 {
+  text-align: start;
+}
+
+main > .section > .default-content-wrapper > p,
+main > .section > .default-content-wrapper > ul {
+  margin-top: 0;
+}
+
+@media (width >= 600px) {
+  main > .section > .default-content-wrapper > h2,
+  main > .section > .default-content-wrapper > h3:first-child {
+    padding: 30px 0;
+    text-align: start;
   }
+
+  main > .section.centered > .default-content-wrapper > h2 {
+    text-align: center;
+  }
+}
+
+@media (width >= 900px) {
+  main > .section > .default-content-wrapper > h2,
+  main > .section > .default-content-wrapper > h3:first-child {
+    padding: 60px 0 30px var(--heading-indent);
+  }
+
+  /* ES NOTICIA sits flush left; the centered section stays centered */
+  main > .section.cards-news-mosaic-container > .default-content-wrapper > h2,
+  main > .section.centered > .default-content-wrapper > h2 {
+    padding-left: 0;
+  }
+}
+
+/* button lists: a default-content list of links on its own (source ul.list-inline) */
+main .default-content-wrapper:has(> ul:only-child) {
+  text-align: center;
+}
+
+main .default-content-wrapper:has(> ul:only-child) > ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+main .default-content-wrapper:has(> ul:only-child) > ul > li > a:any-link {
+  display: inline-block;
+  padding: 13px 27px;
+  background-color: var(--madrid-blue);
+  color: var(--madrid-button-text);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+main .default-content-wrapper:has(> ul:only-child) > ul > li > a:hover,
+main .default-content-wrapper:has(> ul:only-child) > ul > li > a:focus-visible {
+  color: var(--madrid-button-text);
+  text-decoration: underline;
 }
 
 /* section metadata */
 main .section.light,
-main .section.highlight {
+main .section.highlight,
+main .section.light-grey {
   background-color: var(--light-color);
-  margin: 0;
-  padding: 40px 0;
+}
+
+main .section.centered {
+  text-align: center;
 }

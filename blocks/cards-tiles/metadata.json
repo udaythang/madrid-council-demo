@@ -1,0 +1,25 @@
+{
+  "variantName": "cards-tiles",
+  "baseBlock": "cards",
+  "canonicalModel": "collection",
+  "visualCharacteristics": {
+    "purpose": "square image tiles with a caption box over the bottom-left of the image",
+    "summary": "Square image tiles with a dark translucent caption box over the bottom-left of the image. | Same square image tiles with dark caption overlays as A UN CLIC, so cards-tiles is reused."
+  },
+  "contentPattern": {
+    "structure": "cell 1: image; cell 2: linked caption",
+    "rows": [
+      [
+        "Image",
+        "Text: linked caption"
+      ]
+    ],
+    "columns": 2,
+    "notes": "Look-alike image-and-caption tiles in a grid that wraps. | Each item links to an event detail page and the set rotates. That makes it a dynamic list, so Cards."
+  },
+  "options": [],
+  "memberVariantIds": [],
+  "usage": "Service shortcuts (A un clic) and agenda activities: an even grid of square photo tiles, whole tile clickable.",
+  "reuseGuidance": "Reuse for any image-and-short-caption link grid. Use cards-news-mosaic when one item should be featured.",
+  "sourceUrl": "https://www.madrid.es/portal/site/munimadrid"
+}
