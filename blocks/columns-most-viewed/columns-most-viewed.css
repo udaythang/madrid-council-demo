@@ -175,9 +175,11 @@ main .columns-most-viewed .columns-most-viewed-links a:focus-visible {
     color: #dddbdb;
   }
 
+  /* 25px tall tap area inside the 40px rail; the negative margin keeps the layout unchanged */
   main .columns-most-viewed .columns-most-viewed-links a:any-link {
     max-width: none;
-    padding: 0;
+    margin: -6px 0;
+    padding: 6px 0;
     font-size: 13px;
     line-height: 13px;
   }

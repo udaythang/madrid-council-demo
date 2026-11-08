@@ -129,10 +129,9 @@ main .section.cards-features-container > .default-content-wrapper > h2 {
 /* carousel pagination (source .navItem1FormasParte / .navItem2FormasParte) */
 .cards-features .cards-features-dots {
   position: absolute;
-  bottom: 17px;
+  bottom: 9px; /* visible dot stays 17px from the bottom */
   left: 50%;
   display: flex;
-  gap: 16px;
   transform: translateX(-50%);
 }
 
@@ -140,23 +139,37 @@ main .section.cards-features-container > .default-content-wrapper > h2 {
   display: none;
 }
 
+/* 32px tap area (16px gap kept between the visible 16px dots) */
 .cards-features .cards-features-dot {
-  width: 16px;
-  height: 16px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
   margin: 0;
   padding: 0;
-  border: 1px solid #999;
+  border: 0;
   border-radius: 50%;
-  background-color: #fff;
+  background: none;
   cursor: pointer;
 }
 
-.cards-features .cards-features-dot.active {
+.cards-features .cards-features-dot::before {
+  content: "";
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #999;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.cards-features .cards-features-dot.active::before {
   background-color: var(--madrid-blue);
 }
 
 .cards-features .cards-features-dot:focus-visible {
   outline: 3px solid #000;
+  outline-offset: -5px;
 }
 
 @media (width >= 600px) {

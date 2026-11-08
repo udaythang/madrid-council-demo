@@ -226,14 +226,15 @@ main > .section.widget-calendar-container.cards-tiles-container > .default-conte
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  /* image and caption stacked in one grid cell (not absolutely positioned), so the
+     caption link's stretched ::after still covers the whole tile */
   .cards-tiles .cards-tiles-tile {
-    display: block;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
     height: 170px;
   }
 
   .cards-tiles .cards-tiles-tile-image {
-    position: absolute;
-    inset: 0;
+    grid-area: 1 / 1;
     aspect-ratio: auto;
   }
 
@@ -242,9 +243,8 @@ main > .section.widget-calendar-container.cards-tiles-container > .default-conte
   }
 
   .cards-tiles .cards-tiles-tile-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    grid-area: 1 / 1;
+    place-self: end start;
     z-index: 1;
     width: 100%;
     height: 60px;

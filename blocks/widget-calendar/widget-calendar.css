@@ -62,6 +62,7 @@
 
 .widget-calendar .widget-calendar-nav,
 .widget-calendar .widget-calendar-day {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
   border: 0;
@@ -220,8 +221,9 @@
     line-height: 16px;
   }
 
+  /* 24px minimum tap height (source: 20px) */
   .widget-calendar .widget-calendar-day {
-    padding: 3px;
+    padding: 5px 3px;
     font-size: 14px;
     line-height: 14px;
   }

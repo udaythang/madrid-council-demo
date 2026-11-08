@@ -79,7 +79,12 @@ function setupCarousel(block, ul) {
   nav.hidden = true;
   block.append(nav);
 
-  const pageCount = () => Math.max(1, Math.ceil((ul.scrollWidth - 1) / ul.clientWidth));
+  // the row can measure 0 wide mid-layout (resize, zoom, hidden section): no pages then
+  const pageCount = () => {
+    if (ul.clientWidth < 1) return 0;
+    const pages = Math.ceil((ul.scrollWidth - 1) / ul.clientWidth);
+    return Number.isFinite(pages) ? Math.min(Math.max(1, pages), ul.children.length) : 0;
+  };
 
   const updateActive = () => {
     const pages = nav.children.length;
@@ -93,8 +98,8 @@ function setupCarousel(block, ul) {
   };
 
   const build = () => {
-    const overflowing = ul.scrollWidth > ul.clientWidth + 1;
-    const pages = overflowing ? pageCount() : 0;
+    const pages = ul.scrollWidth > ul.clientWidth + 1 ? pageCount() : 0;
+    const overflowing = pages > 1;
     block.classList.toggle('is-carousel', overflowing);
     nav.hidden = !overflowing;
     if (nav.children.length !== pages) {

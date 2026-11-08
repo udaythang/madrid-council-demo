@@ -61,7 +61,8 @@ footer .footer .footer-inner > .footer-social {
 
 /* legal links, separated by commas like the source */
 footer .footer .footer-legal-list {
-  gap: 0 3.5px;
+  /* 8px between wrapped rows keeps the 24px tap areas from overlapping */
+  gap: 8px 3.5px;
 }
 
 footer .footer .footer-legal-list li {
@@ -79,6 +80,13 @@ footer .footer li a:hover {
 footer .footer li a:focus-visible {
   outline: 1px dotted #fff;
   outline-offset: 0;
+}
+
+/* at least 24px tall tap areas; the negative margin keeps the layout unchanged */
+footer .footer .footer-legal-list a:any-link {
+  display: inline-block;
+  margin: -6px 0;
+  padding: 6px 0;
 }
 
 footer .footer .footer-legal-list li:not(:last-child) a::after {

@@ -159,10 +159,9 @@ main .tabs-profiles .tabs-profiles-items a.button:focus-visible {
 .tabs-profiles .tabs-profiles-dots {
   position: absolute;
   z-index: 1;
-  bottom: 16px;
+  bottom: 8px; /* visible dot stays 16px from the bottom */
   left: 50%;
   display: flex;
-  column-gap: 16px;
   transform: translateX(-50%);
 }
 
@@ -170,17 +169,30 @@ main .tabs-profiles .tabs-profiles-items a.button:focus-visible {
   display: none;
 }
 
+/* 32px tap area (16px gap kept between the visible 16px dots) */
 .tabs-profiles .tabs-profiles-dot {
-  width: 16px;
-  height: 16px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
   margin: 0;
   padding: 0;
-  border: 1px solid #999;
+  border: 0;
   border-radius: 50%;
-  background-color: #fff;
+  background: none;
   opacity: 0.75;
   transition: opacity ease 250ms;
   cursor: pointer;
+}
+
+.tabs-profiles .tabs-profiles-dot::before {
+  content: "";
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #999;
+  border-radius: 50%;
+  background-color: #fff;
 }
 
 .tabs-profiles .tabs-profiles-dot:hover,
@@ -188,7 +200,7 @@ main .tabs-profiles .tabs-profiles-items a.button:focus-visible {
   opacity: 1;
 }
 
-.tabs-profiles .tabs-profiles-dot.active {
+.tabs-profiles .tabs-profiles-dot.active::before {
   background-color: var(--madrid-blue);
 }
 
@@ -240,8 +252,11 @@ main .tabs-profiles .tabs-profiles-panel-links li a.button:focus-visible {
     flex-basis: 33.3333%;
   }
 
+  /* keep labels off the screen edge; the row scrolls (with dots) when it doesn't fit */
   .tabs-profiles .tabs-profiles-items {
     grid-auto-columns: minmax(146px, 1fr);
+    padding-inline: var(--section-gutter);
+    scroll-padding-inline: var(--section-gutter);
   }
 
   .tabs-profiles .tabs-profiles-items > li {
@@ -289,6 +304,10 @@ main .tabs-profiles .tabs-profiles-panel-links li a.button:focus-visible {
 
   .tabs-profiles .tabs-profiles-tab {
     flex-basis: 25%;
+  }
+
+  .tabs-profiles .tabs-profiles-items {
+    padding-inline: 0;
   }
 
   /* source item columns are 186px wide inside the 950px container */

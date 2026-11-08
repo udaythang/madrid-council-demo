@@ -52,6 +52,7 @@ function setupCarousel(panel, list) {
     if (!all.length || !list.clientWidth) return [];
     const max = list.scrollWidth - list.clientWidth;
     if (max <= 1) return [];
+    if (!all[0].offsetWidth) return [];
     const perPage = Math.max(1, Math.floor((list.clientWidth + 1) / all[0].offsetWidth));
     const offsets = [];
     for (let i = 0; i < all.length; i += perPage) {

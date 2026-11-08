@@ -187,5 +187,20 @@ export default function decorate(block) {
   });
 
   render();
-  block.replaceChildren(buildToday(today, config.locale), picker);
+  const todayPanel = buildToday(today, config.locale);
+  block.replaceChildren(todayPanel, picker);
+
+  // long month names (SEPTIEMBRE) would overflow the today column: shrink to fit
+  const month = todayPanel.querySelector('.widget-calendar-today-month');
+  const fitMonth = () => {
+    month.style.fontSize = '';
+    if (!month.clientWidth) return; // panel hidden below desktop
+    let size = parseFloat(getComputedStyle(month).fontSize);
+    while (month.scrollWidth > month.clientWidth && size > 16) {
+      size -= 1;
+      month.style.fontSize = `${size}px`;
+    }
+  };
+  new ResizeObserver(fitMonth).observe(todayPanel);
+  document.fonts?.ready.then(fitMonth);
 }
