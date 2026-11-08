@@ -104,6 +104,11 @@
   background-color: rgb(238 238 238);
 }
 
+/* no going back before the current month: the source hides the arrow */
+.widget-calendar .widget-calendar-nav:disabled {
+  visibility: hidden;
+}
+
 .widget-calendar .widget-calendar-grid {
   width: 100%;
   margin: 0;
@@ -154,6 +159,11 @@
 .widget-calendar .widget-calendar-past .widget-calendar-day,
 .widget-calendar .widget-calendar-outside .widget-calendar-day {
   color: rgb(105 105 105);
+}
+
+/* past days are plain text: no pointer, no hover */
+.widget-calendar .widget-calendar-past .widget-calendar-day {
+  pointer-events: none;
 }
 
 /* today: white number on a filled burgundy circle */

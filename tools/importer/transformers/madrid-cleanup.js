@@ -91,6 +91,20 @@ export default function transform(hookName, element, payload) {
 
     // Decorative skyline drawing behind the agenda
     WebImporter.DOMUtils.remove(element, ['.actividades > img']);
+
+    // A link that wraps an image plus a heading (the A UN CLIC laptop + "GESTIONES Y
+    // TRÁMITES") is split into two links on import, leaving the image link unnamed:
+    // give an alt-less image the heading's text (or the link title)
+    element.querySelectorAll('a img').forEach((img) => {
+      if ((img.getAttribute('alt') || '').trim()) return;
+      const link = img.closest('a');
+      const heading = link.querySelector('h1, h2, h3, h4, h5, h6');
+      if (!heading && link.textContent.trim()) return; // text link: the image is decorative
+      const text = (heading && heading.textContent.trim()) || (link.getAttribute('title') || '').trim();
+      if (!text) return;
+      const name = text.toLocaleLowerCase('es');
+      img.setAttribute('alt', name.charAt(0).toLocaleUpperCase('es') + name.slice(1));
+    });
   }
 
   if (hookName === 'afterTransform') {

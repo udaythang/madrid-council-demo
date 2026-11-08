@@ -6,9 +6,16 @@
  * Source: .actividades .calendario (a JS datepicker; no authorable content).
  * Model: 1 row, 1 cell: a link to /widgets/activities-calendar.html with
  * optional query params agenda / dateparam / lang.
- * The source markup carries no agenda search URL (day links are "#"), so
- * `agenda` is only added when a real URL is present.
+ * The source markup carries no agenda search URL (day links are "#"): the
+ * datepicker JS opens MADRID_AGENDA with fechaAccesible=dd/mm/yyyy, so that is
+ * the default when the markup holds no real URL.
  */
+const MADRID_AGENDA = {
+  agenda: 'https://www.madrid.es/portales/munimadrid/es/Inicio/Agenda?vgnextfmt=default&vgnextchannel=ca9671ee4a9eb410VgnVCM100000171f5a0aRCRD&cuando=cuandoDia&enviar=Buscar&newSearch=true&unfolded=true',
+  dateparam: 'fechaAccesible',
+  dateformat: 'dd/mm/yyyy',
+};
+
 export default function parse(element, { document }) {
   const url = new URL('/widgets/activities-calendar.html', 'https://example.com');
 
@@ -36,7 +43,10 @@ export default function parse(element, { document }) {
   }
 
   const lang = (document.documentElement && document.documentElement.getAttribute('lang')) || '';
-  if (lang) url.searchParams.set('lang', lang.split('-')[0].toLowerCase());
+  url.searchParams.set('lang', lang ? lang.split('-')[0].toLowerCase() : 'es');
+  if (!url.searchParams.has('agenda')) {
+    Object.entries(MADRID_AGENDA).forEach(([key, value]) => url.searchParams.set(key, value));
+  }
 
   const a = document.createElement('a');
   const href = `${url.pathname}${url.search}`;

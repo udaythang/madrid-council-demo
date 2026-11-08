@@ -500,3 +500,162 @@ header nav .nav-sections a:focus-visible {
     padding: 4px 15px 4px 9px;
   }
 }
+
+/* dropdowns: menu items with a nested list (accordion in the panel, dropdown on desktop) */
+header nav .nav-drop-label {
+  display: flex;
+  align-items: center;
+}
+
+header nav .nav-drop-toggle {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 43px;
+  margin: 0;
+  border: 0;
+  padding: 0 18px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 22px;
+  text-align: start;
+  cursor: pointer;
+}
+
+header nav .nav-drop-toggle-label {
+  flex: 1 1 auto;
+  padding: 0 22px;
+}
+
+header nav .nav-drop-toggle::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentcolor;
+  border-bottom: 2px solid currentcolor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+header nav .nav-drop.is-open .nav-drop-toggle::after {
+  transform: rotate(-135deg);
+}
+
+header nav .nav-drop > ul {
+  display: none;
+  padding-left: 16px;
+}
+
+header nav .nav-drop.is-open > ul {
+  display: block;
+}
+
+header nav .nav-drop > ul li {
+  border: 0;
+}
+
+header nav .nav-drop-label > a:any-link {
+  flex: 1 1 auto;
+}
+
+header nav .nav-drop > ul a:any-link {
+  font-size: 18px;
+  line-height: 36px;
+}
+
+/* portal label ("Portal web del Ayuntamiento de Madrid"): the page h1; visible in the
+   desktop brand bar only, as on www.madrid.es, and kept for screen readers below that */
+header nav .nav-brand .nav-brand-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (width >= 900px) {
+  header nav .nav-drop {
+    position: relative;
+  }
+
+  header nav .nav-drop-toggle {
+    min-height: 0;
+    padding: 0 0 0 6px;
+    color: var(--text-color);
+    font-size: 20px;
+    line-height: 20px;
+    white-space: nowrap;
+  }
+
+  header nav .nav-drop-toggle:hover {
+    color: var(--madrid-blue);
+  }
+
+  header nav .nav-drop-toggle-label {
+    padding: 0;
+  }
+
+  header nav .nav-drop-toggle::after {
+    width: 6px;
+    height: 6px;
+  }
+
+  header nav .nav-drop > ul {
+    position: absolute;
+    top: calc(100% + 13px);
+    left: 0;
+    z-index: 3;
+    min-width: 220px;
+    padding: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+  }
+
+  header nav .nav-drop > ul li {
+    padding: 0;
+  }
+
+  header nav .nav-drop > ul a:any-link {
+    padding: 8px 16px;
+    font-size: 16px;
+    line-height: 20px;
+    white-space: normal;
+  }
+
+  /* label and logo sit directly in the brand bar's flex row */
+  header nav .nav-brand .default-content-wrapper {
+    display: contents;
+  }
+
+  header nav .nav-brand .nav-brand-label {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 1px auto 0 30px;
+    overflow: visible;
+    clip-path: none;
+    color: #fff;
+    font-family: var(--heading-font-family);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16px;
+  }
+
+  header nav .nav-brand .nav-brand-label a:any-link {
+    display: inline;
+    color: #fff;
+    line-height: inherit;
+    text-decoration: none;
+  }
+
+  header nav .nav-brand .nav-brand-label a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+}

@@ -68,22 +68,34 @@ export default function decorate(block) {
   ul.querySelectorAll('picture > img').forEach((img) => {
     const url = new URL(img.src, window.location.href);
     if (url.origin !== window.location.origin || /\.svg$/i.test(url.pathname)) return;
-    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '96' }]));
+    const picture = createOptimizedPicture(img.src, img.alt, false, [{ width: '96' }]);
+    // keep the intrinsic size so the browser reserves space before the image loads
+    const optimized = picture.querySelector('img');
+    ['width', 'height'].forEach((attr) => {
+      if (img.hasAttribute(attr)) optimized.setAttribute(attr, img.getAttribute(attr));
+    });
+    img.closest('picture').replaceWith(picture);
   });
 
   block.replaceChildren(ul);
 
-  // date line above the block ("Domingo 8 de Noviembre"): the source shows the
-  // day and month part muted, so wrap it in a span (text is left unchanged)
+  // date line above the block ("Domingo 8 de Noviembre"): www.madrid.es prints today's
+  // date there, so the authored date is only a placeholder and is replaced with today's
+  // date in Madrid; the day and month part is muted, as on the source
   const section = block.closest('.section');
   section?.querySelectorAll('.default-content-wrapper > p').forEach((p) => {
     if (p.children.length) return;
-    const match = p.textContent.trim().match(/^(\S+)\s+(\d{1,2}\s+de\s+\S+)$/i);
-    if (!match) return;
-    const [, day, date] = match;
+    if (!/^\S+\s+\d{1,2}\s+de\s+\S+$/i.test(p.textContent.trim())) return;
+    const lang = document.documentElement.lang || 'es';
+    const now = new Date();
+    const part = (options) => now.toLocaleDateString(lang, { timeZone: 'Europe/Madrid', ...options });
+    const capitalize = (text) => text.charAt(0).toLocaleUpperCase(lang) + text.slice(1);
+    const time = document.createElement('time');
+    time.dateTime = now.toLocaleDateString('sv-SE', { timeZone: 'Europe/Madrid' }); // yyyy-mm-dd
     const muted = document.createElement('span');
     muted.className = 'cards-live-info-date-muted';
-    muted.textContent = date;
-    p.replaceChildren(`${day} `, muted);
+    muted.textContent = `${part({ day: 'numeric' })} de ${capitalize(part({ month: 'long' }))}`;
+    time.append(`${capitalize(part({ weekday: 'long' }))} `, muted);
+    p.replaceChildren(time);
   });
 }

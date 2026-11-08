@@ -32,7 +32,8 @@ async function loadFirstFragment(paths) {
 }
 
 /**
- * Nav lookup order: `nav` metadata, then /content/nav (local preview), then /nav (production).
+ * Nav lookup order: `nav` metadata, then /content/nav (local `aem up` preview only), then /nav.
+ * Production never requests /content/nav, so it logs no 404.
  * @returns {string[]} unique candidate paths
  */
 function getNavPaths() {
@@ -43,8 +44,66 @@ function getNavPaths() {
       paths.push(new URL(navMeta, window.location).pathname.replace(/\.plain\.html$/, ''));
     } catch { /* ignore malformed metadata */ }
   }
-  paths.push('/content/nav', '/nav');
+  if (['localhost', '127.0.0.1'].includes(window.location.hostname)) paths.push('/content/nav');
+  paths.push('/nav');
   return [...new Set(paths)];
+}
+
+/**
+ * Closes every open dropdown in the menu bar, except the one passed in.
+ * @param {Element} nav the nav element
+ * @param {Element} [keep] dropdown toggle to leave as is
+ */
+function setDropdown(toggle, open) {
+  toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  toggle.closest('.nav-drop')?.classList.toggle('is-open', open);
+}
+
+function closeDropdowns(nav, keep) {
+  nav.querySelectorAll('.nav-drop-toggle[aria-expanded="true"]').forEach((toggle) => {
+    if (toggle !== keep) setDropdown(toggle, false);
+  });
+}
+
+/**
+ * Turns menu items that hold a nested list into dropdowns (desktop) / accordions (panel).
+ * A linked label keeps its link and gets a separate toggle; a plain label becomes the toggle.
+ * @param {Element} nav the nav element
+ * @param {Element} navSections the menu section
+ */
+function decorateDropdowns(nav, navSections) {
+  navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((item, i) => {
+    const subList = item.querySelector(':scope > ul');
+    if (!subList) return;
+    item.classList.add('nav-drop');
+    subList.id = subList.id || `nav-drop-${i + 1}`;
+    const label = [...item.childNodes].filter((node) => node !== subList);
+    const link = label.map((node) => (node.nodeType === Node.ELEMENT_NODE && (node.matches('a[href]') ? node : node.querySelector('a[href]')))).find(Boolean);
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = `nav-drop-toggle ${link ? 'nav-drop-toggle-split' : 'nav-drop-toggle-label'}`;
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', subList.id);
+
+    const labelWrap = document.createElement('div');
+    labelWrap.className = 'nav-drop-label';
+    if (link) {
+      labelWrap.append(...label);
+      toggle.setAttribute('aria-label', link.textContent.trim());
+      labelWrap.append(toggle);
+    } else {
+      toggle.append(...label);
+      labelWrap.append(toggle);
+    }
+    item.prepend(labelWrap);
+
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      closeDropdowns(nav, toggle);
+      setDropdown(toggle, !expanded);
+    });
+  });
 }
 
 function isMenuOpen(nav) {
@@ -102,7 +161,11 @@ function closeOnEscape(e) {
   if (e.code !== 'Escape' && e.key !== 'Escape') return;
   const nav = document.getElementById('nav');
   if (!nav) return;
-  if (isSearchOpen(nav)) {
+  const openDrop = nav.querySelector('.nav-drop-toggle[aria-expanded="true"]');
+  if (openDrop) {
+    setDropdown(openDrop, false);
+    openDrop.focus();
+  } else if (isSearchOpen(nav)) {
     toggleSearch(nav, false);
   } else if (isMenuOpen(nav)) {
     toggleMenu(nav, false);
@@ -115,7 +178,9 @@ function closeOnEscape(e) {
  */
 function closeOnFocusLost(e) {
   const nav = e.currentTarget;
-  if (isMenuOpen(nav) && !nav.contains(e.relatedTarget)) toggleMenu(nav, false, false);
+  if (nav.contains(e.relatedTarget)) return;
+  closeDropdowns(nav);
+  if (isMenuOpen(nav)) toggleMenu(nav, false, false);
 }
 
 /**
@@ -201,16 +266,26 @@ export default async function decorate(block) {
     if (section) section.classList.add(`nav-${c}`);
   });
 
-  // brand: plain logo link, never a button
+  // brand: plain logo link, never a button, plus the optional portal label
   const navBrand = nav.querySelector('.nav-brand');
   if (navBrand) {
     navBrand.querySelectorAll('.button').forEach((btn) => { btn.className = ''; });
     navBrand.querySelectorAll('.button-wrapper, .button-container').forEach((p) => { p.className = ''; });
-    const logoLink = navBrand.querySelector('a[href]');
     const logo = navBrand.querySelector('img');
     if (logo) {
       logo.loading = 'eager';
-      if (logoLink) logoLink.classList.add('nav-logo');
+      logo.closest('a[href]')?.classList.add('nav-logo');
+    }
+    // text without the logo ("Portal web del Ayuntamiento de Madrid") is the portal label;
+    // like www.madrid.es it is the page's h1 when the page content has none of its own
+    const labelBlock = [...navBrand.querySelectorAll('p, h1, h2, h3')]
+      .find((el) => !el.querySelector('img') && el.textContent.trim());
+    if (labelBlock) {
+      const asHeading = !document.querySelector('main h1');
+      const label = document.createElement(asHeading ? 'h1' : 'p');
+      label.className = 'nav-brand-label';
+      label.append(...labelBlock.childNodes);
+      labelBlock.replaceWith(label);
     }
   }
 
@@ -228,6 +303,7 @@ export default async function decorate(block) {
     close.addEventListener('click', () => toggleMenu(nav, false));
     panelHeader.append(close);
     navSections.prepend(panelHeader);
+    decorateDropdowns(nav, navSections);
   }
 
   // tools: the "Buscar" link becomes the search toggle plus a GET form
@@ -274,8 +350,15 @@ export default async function decorate(block) {
   toggleMenu(nav, false, false);
   window.addEventListener('keydown', closeOnEscape);
   nav.addEventListener('focusout', closeOnFocusLost);
-  // never leave the panel or the scroll lock behind when crossing the breakpoint
-  isDesktop.addEventListener('change', () => toggleMenu(nav, false, false));
+  // never leave the panel, a dropdown or the scroll lock behind when crossing the breakpoint
+  isDesktop.addEventListener('change', () => {
+    closeDropdowns(nav);
+    toggleMenu(nav, false, false);
+  });
+  // a click anywhere outside an open dropdown closes it
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest?.('.nav-drop')) closeDropdowns(nav);
+  });
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';

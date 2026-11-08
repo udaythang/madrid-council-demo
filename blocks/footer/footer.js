@@ -11,15 +11,16 @@ const SOCIAL_NETWORKS = {
 
 /**
  * Loads the footer fragment, independent of the footer metadata.
- * Uses the `footer` metadata when present, otherwise tries the local preview
- * path (/content/footer) and falls back to /footer (production / DA).
+ * Uses the `footer` metadata when present, otherwise /footer (production / DA).
+ * Only the local `aem up` preview tries /content/footer first, so production logs no 404.
  * @returns {Promise<HTMLElement|null>} the fragment root
  */
 async function loadFooterFragment() {
   const footerMeta = getMetadata('footer');
-  const paths = footerMeta
-    ? [new URL(footerMeta, window.location).pathname]
-    : ['/content/footer', '/footer'];
+  const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+  let paths = ['/footer'];
+  if (footerMeta) paths = [new URL(footerMeta, window.location).pathname];
+  else if (isLocal) paths = ['/content/footer', '/footer'];
   // eslint-disable-next-line no-restricted-syntax
   for (const path of paths) {
     // sequential on purpose: only fall back when the previous path is missing

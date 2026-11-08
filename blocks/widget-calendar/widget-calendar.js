@@ -5,9 +5,11 @@
  * `/widgets/activities-calendar.html?agenda=/agenda&dateparam=fecha`.
  * Query params become data attributes on the block (as in the project `widget` block):
  * - `agenda`: URL a picked date navigates to (optional; without it, only an event fires)
- * - `dateparam`: query param name for the picked date (default `fecha`, ISO yyyy-mm-dd)
+ * - `dateparam`: query param name for the picked date (default `fecha`)
+ * - `dateformat`: `iso` (yyyy-mm-dd, default) or `dd/mm/yyyy`, as the agenda expects
  * - `lang`: locale for day and month names (default: document language, then `es`)
- * Every pick also dispatches a `widget-calendar:select` event with `detail.date`.
+ * Every pick also dispatches a `widget-calendar:select` event with `detail.date` (ISO).
+ * Days before today are shown but cannot be picked, as on www.madrid.es.
  * @param {Element} block The block element
  */
 
@@ -16,6 +18,12 @@ function isoDate(date) {
   const m = String(date.getMonth() + 1).padStart(2, '0');
   const d = String(date.getDate()).padStart(2, '0');
   return `${y}-${m}-${d}`;
+}
+
+function formatDate(date, format) {
+  if (format !== 'dd/mm/yyyy') return isoDate(date);
+  const [y, m, d] = isoDate(date).split('-');
+  return `${d}/${m}/${y}`;
 }
 
 function sameDay(a, b) {
@@ -50,6 +58,7 @@ function readConfig(block) {
     locale,
     agenda: block.dataset.agenda || '',
     dateParam: block.dataset.dateparam || 'fecha',
+    dateFormat: (block.dataset.dateformat || 'iso').toLowerCase(),
   };
 }
 
@@ -103,7 +112,7 @@ export default function decorate(block) {
     block.dispatchEvent(new CustomEvent('widget-calendar:select', { bubbles: true, detail: { date: iso } }));
     if (config.agenda) {
       const target = new URL(config.agenda, window.location.href);
-      target.searchParams.set(config.dateParam, iso);
+      target.searchParams.set(config.dateParam, formatDate(date, config.dateFormat));
       window.location.href = target.href;
     }
   };
@@ -114,6 +123,8 @@ export default function decorate(block) {
     const prevMonth = new Date(view.getFullYear(), view.getMonth() - 1, 1);
     const nextMonth = new Date(view.getFullYear(), view.getMonth() + 1, 1);
     prev.setAttribute('aria-label', prevMonth.toLocaleDateString(config.locale, { month: 'long', year: 'numeric' }));
+    // nothing before the current month can be picked
+    prev.disabled = view <= new Date(today.getFullYear(), today.getMonth(), 1);
     next.setAttribute('aria-label', nextMonth.toLocaleDateString(config.locale, { month: 'long', year: 'numeric' }));
 
     const thead = document.createElement('thead');
@@ -137,20 +148,24 @@ export default function decorate(block) {
       for (let d = 0; d < 7; d += 1) {
         const date = new Date(start.getFullYear(), start.getMonth(), start.getDate() + w * 7 + d);
         const td = document.createElement('td');
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'widget-calendar-day';
-        btn.textContent = String(date.getDate());
-        btn.dataset.date = isoDate(date);
-        btn.setAttribute('aria-label', date.toLocaleDateString(config.locale, { dateStyle: 'full' }));
+        const isPast = date < today;
+        // past days are plain text; only today and later can be picked
+        const day = document.createElement(isPast ? 'span' : 'button');
+        if (!isPast) {
+          day.type = 'button';
+          day.addEventListener('click', () => select(date));
+        }
+        day.className = 'widget-calendar-day';
+        day.textContent = String(date.getDate());
+        day.dataset.date = isoDate(date);
+        day.setAttribute('aria-label', date.toLocaleDateString(config.locale, { dateStyle: 'full' }));
         if (date.getMonth() !== view.getMonth()) td.classList.add('widget-calendar-outside');
-        if (date < today) td.classList.add('widget-calendar-past');
+        if (isPast) td.classList.add('widget-calendar-past');
         if (sameDay(date, today)) {
           td.classList.add('widget-calendar-is-today');
-          btn.setAttribute('aria-current', 'date');
+          day.setAttribute('aria-current', 'date');
         }
-        btn.addEventListener('click', () => select(date));
-        td.append(btn);
+        td.append(day);
         tr.append(td);
       }
       tbody.append(tr);
