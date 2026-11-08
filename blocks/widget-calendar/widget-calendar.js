@@ -102,10 +102,14 @@ export default function decorate(block) {
   next.textContent = '›';
   header.append(prev, title, next);
 
+  // ARIA grid: one tab stop; arrows move by day/week, Home/End within the week,
+  // PageUp/PageDown by month (roving tabindex)
   const grid = document.createElement('table');
   grid.className = 'widget-calendar-grid';
   grid.setAttribute('role', 'grid');
+  grid.setAttribute('aria-label', 'Calendario de actividades');
   picker.append(header, grid);
+  let focusDate = today; // the day that holds tabindex="0"
 
   const select = (date) => {
     const iso = isoDate(date);
@@ -153,6 +157,7 @@ export default function decorate(block) {
         const day = document.createElement(isPast ? 'span' : 'button');
         if (!isPast) {
           day.type = 'button';
+          day.tabIndex = -1;
           day.addEventListener('click', () => select(date));
         }
         day.className = 'widget-calendar-day';
@@ -175,7 +180,49 @@ export default function decorate(block) {
       if (lastShown >= new Date(view.getFullYear(), view.getMonth() + 1, 0)) break;
     }
     grid.replaceChildren(thead, tbody);
+
+    // roving tabindex: the focus day if it is in this month, else the first pickable day
+    const inMonth = (d) => d.getMonth() === view.getMonth()
+      && d.getFullYear() === view.getFullYear();
+    const focusSelector = `button[data-date="${isoDate(focusDate)}"]`;
+    let rover = inMonth(focusDate) ? tbody.querySelector(focusSelector) : null;
+    if (!rover) {
+      rover = [...tbody.querySelectorAll('button.widget-calendar-day')]
+        .find((b) => !b.closest('.widget-calendar-outside')) || tbody.querySelector('button.widget-calendar-day');
+      if (rover) focusDate = new Date(`${rover.dataset.date}T00:00:00`);
+    }
+    if (rover) rover.tabIndex = 0;
   };
+
+  const moveFocus = (date) => {
+    const target = date < today ? today : date;
+    focusDate = target;
+    if (target.getMonth() !== view.getMonth() || target.getFullYear() !== view.getFullYear()) {
+      view = new Date(target.getFullYear(), target.getMonth(), 1);
+    }
+    render();
+    grid.querySelector(`button[data-date="${isoDate(target)}"]`)?.focus();
+  };
+
+  grid.addEventListener('keydown', (e) => {
+    const current = e.target.closest('button.widget-calendar-day');
+    if (!current) return;
+    const d = new Date(`${current.dataset.date}T00:00:00`);
+    const weekday = (d.getDay() + 6) % 7; // Monday = 0
+    const steps = {
+      ArrowLeft: () => new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1),
+      ArrowRight: () => new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1),
+      ArrowUp: () => new Date(d.getFullYear(), d.getMonth(), d.getDate() - 7),
+      ArrowDown: () => new Date(d.getFullYear(), d.getMonth(), d.getDate() + 7),
+      Home: () => new Date(d.getFullYear(), d.getMonth(), d.getDate() - weekday),
+      End: () => new Date(d.getFullYear(), d.getMonth(), d.getDate() + (6 - weekday)),
+      PageUp: () => new Date(d.getFullYear(), d.getMonth() - 1, d.getDate()),
+      PageDown: () => new Date(d.getFullYear(), d.getMonth() + 1, d.getDate()),
+    };
+    if (!steps[e.key]) return;
+    e.preventDefault();
+    moveFocus(steps[e.key]());
+  });
 
   prev.addEventListener('click', () => {
     view = new Date(view.getFullYear(), view.getMonth() - 1, 1);

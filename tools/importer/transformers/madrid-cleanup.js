@@ -92,6 +92,31 @@ export default function transform(hookName, element, payload) {
     // Decorative skyline drawing behind the agenda
     WebImporter.DOMUtils.remove(element, ['.actividades > img']);
 
+    // The agenda title starts its own section: h2, not the source's h3
+    element.querySelectorAll('.actividades h3.actividades__title').forEach((h3) => {
+      const h2 = element.ownerDocument.createElement('h2');
+      h2.className = h3.className;
+      h2.append(...h3.childNodes);
+      h3.replaceWith(h2);
+    });
+
+    // Placeholder alt texts ("Imagen banner", "Destacada") say nothing about the image:
+    // use a known description, else empty alt when the link already has text
+    const ALT_OVERRIDES = {
+      'BannerAdaptaTuRuta.jpg': 'Mientras Madrid se transforma, adapta tu ruta. Sigamos mejorando Madrid entre todos',
+    };
+    element.querySelectorAll('img[alt]').forEach((img) => {
+      if (!/^(imagen( banner)?|destacada|foto|image)$/i.test(img.getAttribute('alt').trim())) return;
+      const file = decodeURIComponent((img.getAttribute('src') || '').split('/').pop().split('?')[0]);
+      const known = Object.entries(ALT_OVERRIDES).find(([name]) => file.endsWith(name));
+      if (known) {
+        img.setAttribute('alt', known[1]);
+        return;
+      }
+      const card = img.closest('li, a');
+      if (card && card.textContent.trim()) img.setAttribute('alt', ''); // decorative next to its title
+    });
+
     // A link that wraps an image plus a heading (the A UN CLIC laptop + "GESTIONES Y
     // TRÁMITES") is split into two links on import, leaving the image link unnamed:
     // give an alt-less image the heading's text (or the link title)

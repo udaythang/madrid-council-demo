@@ -8,6 +8,9 @@
  */
 
 // source glyphs (AytMadIcons) keyed by icon token
+// carousel dots jump instead of gliding when the user asks for reduced motion
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
 const GLYPHS = {
   'tu-contenido': 'U',
   tramites: 'R',
@@ -121,7 +124,7 @@ function setupCarousel(block, ul) {
     const pages = nav.children.length;
     const max = ul.scrollWidth - ul.clientWidth;
     const target = pages > 1 ? (max * Number(dot.dataset.page)) / (pages - 1) : 0;
-    ul.scrollTo({ left: target, behavior: 'smooth' });
+    ul.scrollTo({ left: target, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
   });
 
   let ticking = false;
@@ -140,6 +143,8 @@ function setupCarousel(block, ul) {
 
 export default function decorate(block) {
   const ul = document.createElement('ul');
+  // list-style: none drops list semantics in Safari/VoiceOver; restore them
+  ul.setAttribute('role', 'list');
 
   [...block.children].forEach((row) => {
     if (!row.textContent.trim() && !row.querySelector('span.icon, picture, img')) return;

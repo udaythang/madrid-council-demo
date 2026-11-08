@@ -25,6 +25,8 @@ function optimizeImages(root, width) {
  */
 export default function decorate(block) {
   const ul = document.createElement('ul');
+  // list-style: none drops list semantics in Safari/VoiceOver; restore them
+  ul.setAttribute('role', 'list');
 
   [...block.children].forEach((row) => {
     if (!row.textContent.trim() && !row.querySelector('picture, img')) return;
@@ -64,7 +66,11 @@ export default function decorate(block) {
   optimizeImages(ul, '750');
   // the featured image can be large on desktop
   const featuredImg = first?.querySelector('img');
-  if (featuredImg) featuredImg.loading = 'eager';
+  if (featuredImg) {
+    featuredImg.loading = 'eager';
+    // below desktop the seasonal photo is a thin strip, so this image is the LCP element
+    if (!window.matchMedia('(min-width: 900px)').matches) featuredImg.fetchPriority = 'high';
+  }
 
   block.replaceChildren(ul);
 }

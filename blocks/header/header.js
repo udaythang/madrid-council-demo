@@ -9,6 +9,8 @@ const LABELS = {
   openMenu: 'Abrir menú del portal',
   closeMenu: 'Cerrar menú del portal',
   searchPlaceholder: '¿Qué estás buscando?',
+  skipNav: 'Saltar navegación',
+  mainNav: 'Principal',
 };
 
 // hidden fields the madrid.es search engine expects with every query
@@ -144,6 +146,8 @@ function toggleMenu(nav, forceExpanded = null, moveFocus = true) {
   const hamburger = nav.querySelector('.nav-hamburger button');
   nav.setAttribute('aria-expanded', open ? 'true' : 'false');
   document.body.style.overflowY = open ? 'hidden' : '';
+  // the page behind the open panel is unreachable for keyboard and screen readers
+  document.querySelectorAll('body > main, body > footer').forEach((el) => { el.inert = open; });
   if (hamburger) {
     hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
     hamburger.setAttribute('aria-label', open ? LABELS.closeMenu : LABELS.openMenu);
@@ -253,6 +257,24 @@ export default async function decorate(block) {
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
+  nav.setAttribute('aria-label', LABELS.mainNav);
+
+  // skip link ("Saltar navegación", as on www.madrid.es): first stop, jumps to the content
+  const main = document.querySelector('main');
+  if (main) {
+    main.id = main.id || 'main';
+    main.tabIndex = -1;
+    const skip = document.createElement('a');
+    skip.className = 'nav-skip';
+    skip.href = `#${main.id}`;
+    skip.textContent = LABELS.skipNav;
+    skip.addEventListener('click', (e) => {
+      e.preventDefault();
+      main.focus();
+      main.scrollIntoView();
+    });
+    block.append(skip);
+  }
   if (fragment) while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
   // the nav document's page metadata (robots) is not header content

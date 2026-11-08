@@ -1,3 +1,6 @@
+// carousel dots jump instead of gliding when the user asks for reduced motion
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
 let instance = 0;
 
 /**
@@ -95,7 +98,7 @@ function setupCarousel(panel, list) {
     const dot = e.target.closest('.tabs-profiles-dot');
     if (!dot) return;
     const target = pageOffsets()[Number(dot.dataset.page)];
-    if (target !== undefined) list.scrollTo({ left: target, behavior: 'smooth' });
+    if (target !== undefined) list.scrollTo({ left: target, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
   });
 
   let ticking = false;
@@ -157,6 +160,8 @@ export default function decorate(block) {
     } else if (panel.querySelector('ul, ol')) {
       panel.classList.add('tabs-profiles-panel-links');
     }
+    // list-style: none drops list semantics in Safari/VoiceOver; restore them
+    panel.querySelectorAll('ul, ol').forEach((list) => list.setAttribute('role', 'list'));
 
     tablist.append(button);
     panels.append(panel);

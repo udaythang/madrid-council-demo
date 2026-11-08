@@ -7,7 +7,9 @@
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url('../fonts/ayuntamiento-madrid.woff') format('woff');
+  src:
+    url('../fonts/ayuntamiento-madrid.woff2') format('woff2'),
+    url('../fonts/ayuntamiento-madrid.woff') format('woff');
 }
 
 @font-face {
@@ -15,5 +17,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url('../fonts/ayuntamiento-madrid-2.woff') format('woff');
+  src:
+    url('../fonts/ayuntamiento-madrid-2.woff2') format('woff2'),
+    url('../fonts/ayuntamiento-madrid-2.woff') format('woff');
 }

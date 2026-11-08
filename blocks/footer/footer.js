@@ -99,6 +99,8 @@ export default async function decorate(block) {
   // lists: social when most links are known networks, legal otherwise
   fragment.querySelectorAll('ul').forEach((ul) => {
     if (ul.parentElement.closest('ul')) return;
+    // list-style: none drops list semantics in Safari/VoiceOver; restore them
+    ul.setAttribute('role', 'list');
     const links = [...ul.querySelectorAll('a')];
     const networks = links.map(getNetwork);
     const isSocial = links.length && networks.filter(Boolean).length > links.length / 2;

@@ -36,6 +36,8 @@ function extractIcon(row) {
  */
 export default function decorate(block) {
   const ul = document.createElement('ul');
+  // list-style: none drops list semantics in Safari/VoiceOver; restore them
+  ul.setAttribute('role', 'list');
 
   [...block.children].forEach((row) => {
     const iconName = extractIcon(row);

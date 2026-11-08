@@ -22,6 +22,8 @@ function toKey(text) {
  */
 export default function decorate(block) {
   const ul = document.createElement('ul');
+  // list-style: none drops list semantics in Safari/VoiceOver; restore them
+  ul.setAttribute('role', 'list');
 
   [...block.children].forEach((row) => {
     if (!row.textContent.trim() && !row.querySelector('picture, img')) return;
@@ -41,6 +43,8 @@ export default function decorate(block) {
       const pic = cell.querySelector('picture');
       const text = cell.textContent.trim();
       if (pic && !text && !icon.children.length) {
+        // the card title names the icon; the weather icon would also announce a stale state
+        pic.querySelectorAll('img').forEach((img) => { img.alt = ''; });
         icon.append(pic);
       } else if (!bodyDone) {
         if (text || cell.children.length) {
