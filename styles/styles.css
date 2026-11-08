@@ -18,6 +18,11 @@
 @font-face {
   font-family: lato-fallback;
   size-adjust: 97.38%;
+
+  /* Lato metrics (ascent 0.987, descent 0.213, no line gap) / size-adjust: same box as Lato */
+  ascent-override: 101.32%;
+  descent-override: 21.87%;
+  line-gap-override: 0%;
   src: local('Arial');
 }
 
