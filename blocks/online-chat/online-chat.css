@@ -1,0 +1,141 @@
+/* online-chat: Línea Madrid floating chat bubble, measured on www.madrid.es
+   (bubble size / distance from the right and bottom edges of the viewport):
+   375px: 120 / 59 / 125 - 768px: 150 / 66 / 124 - 1440px: 180 / 88 / 113 */
+main > .section.online-chat-container {
+  padding: 0;
+}
+
+main > .section.online-chat-container > .online-chat-wrapper {
+  padding: 0;
+}
+
+.online-chat {
+  --online-chat-size: 120px;
+  --online-chat-right: 59px;
+  --online-chat-bottom: 125px;
+  --online-chat-close: 14px;
+  --online-chat-close-gap: 6px;
+
+  position: fixed;
+  right: calc(var(--online-chat-right) + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--online-chat-bottom) + env(safe-area-inset-bottom, 0px));
+  z-index: 50; /* above page content (tiles use 1-2), below the header (100) */
+  width: var(--online-chat-size);
+  height: var(--online-chat-size);
+}
+
+.online-chat[hidden] {
+  display: none;
+}
+
+/* never cover the open mobile menu */
+body:has(#nav[aria-expanded='true']) .online-chat {
+  display: none;
+}
+
+.online-chat .online-chat-bubble {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.online-chat .online-chat-link:any-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  line-height: 0;
+}
+
+.online-chat .online-chat-link:focus-visible {
+  outline: 3px solid var(--madrid-blue);
+  outline-offset: 2px;
+}
+
+.online-chat img,
+.online-chat picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.online-chat img {
+  object-fit: contain;
+}
+
+/* screen-reader context for the link ("abre ... en una pestaña nueva") */
+.online-chat .online-chat-note {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* orange cross above the bubble's top-right edge, as on the source;
+   a 44px invisible tap area surrounds the small glyph */
+.online-chat .online-chat-close {
+  position: absolute;
+  top: calc(-1 * var(--online-chat-close-gap));
+  left: calc(100% + var(--online-chat-close-gap));
+  display: grid;
+  place-items: center;
+  width: var(--online-chat-close);
+  height: var(--online-chat-close);
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.online-chat .online-chat-close::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+
+/* thin white outline: same look on white, still visible (3:1+) over dark content */
+.online-chat .online-chat-close svg {
+  width: 100%;
+  height: 100%;
+  fill: #c30;
+  filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff);
+}
+
+.online-chat .online-chat-close:focus-visible {
+  outline: 2px solid var(--madrid-blue);
+  outline-offset: 3px;
+}
+
+@media (width >= 600px) {
+  .online-chat {
+    --online-chat-size: 150px;
+    --online-chat-right: 66px;
+    --online-chat-bottom: 124px;
+    --online-chat-close: 18px;
+    --online-chat-close-gap: 7px;
+  }
+}
+
+@media (width >= 900px) {
+  .online-chat {
+    --online-chat-size: 180px;
+    --online-chat-right: 88px;
+    --online-chat-bottom: 113px;
+    --online-chat-close: 22px;
+    --online-chat-close-gap: 9px;
+  }
+}
+
+@media print {
+  .online-chat {
+    display: none;
+  }
+}

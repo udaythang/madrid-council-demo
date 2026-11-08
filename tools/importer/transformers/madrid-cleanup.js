@@ -41,9 +41,17 @@ function absolutizeLinks(element, payload) {
   });
 }
 
+// pages whose source mounts the Línea Madrid chat (#root / .chat-widget-launcher)
+const pagesWithChat = new WeakSet();
+
 export default function transform(hookName, element, payload) {
   if (hookName === 'beforeTransform') {
     removeCookieUi(element);
+
+    // the chat app itself is removed below; remember it so an online-chat block replaces it
+    if (element.querySelector('#root[data-lm-chat-mounted], .chat-widget-launcher')) {
+      pagesWithChat.add(element.ownerDocument);
+    }
 
     // Overlays, widgets, loaders
     WebImporter.DOMUtils.remove(element, [
@@ -169,5 +177,18 @@ export default function transform(hookName, element, payload) {
         }
       });
     });
+
+    // Línea Madrid chat: its own last section with an online-chat block. The real chat only
+    // runs on www.madrid.es (its gateway accepts that origin only), so the link opens madrid.es.
+    if (pagesWithChat.has(element.ownerDocument)) {
+      const doc = element.ownerDocument;
+      const p = doc.createElement('p');
+      const a = doc.createElement('a');
+      a.href = 'https://www.madrid.es/portal/site/munimadrid';
+      a.textContent = 'Abrir el chat de Línea Madrid en madrid.es';
+      p.append(a);
+      const block = WebImporter.Blocks.createBlock(doc, { name: 'online-chat', cells: [[p]] });
+      element.append(doc.createElement('hr'), block);
+    }
   }
 }
