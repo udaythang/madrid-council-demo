@@ -10,6 +10,7 @@ import {
   loadSections,
   loadCSS,
   buildBlock,
+  getMetadata,
 } from './aem.js';
 
 if (window.trustedTypes && window.trustedTypes.createPolicy) {
@@ -74,6 +75,21 @@ function buildWidgetAutoBlocks(main) {
 }
 
 /**
+ * Adds the up/down scroll-navigation buttons (as on every www.madrid.es page) in their own
+ * last section of the page. Skipped for fragments (nav, footer), when the page already has
+ * the block, or with page metadata `scroll-navigation: off`.
+ * @param {Element} main The container element
+ */
+function buildScrollNavigation(main) {
+  if (main !== document.querySelector('body > main')) return;
+  if (main.querySelector('.scroll-navigation')) return;
+  if (getMetadata('scroll-navigation').toLowerCase() === 'off') return;
+  const section = document.createElement('div');
+  section.append(buildBlock('scroll-navigation', ''));
+  main.append(section);
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
@@ -97,6 +113,7 @@ function buildAutoBlocks(main) {
       });
     }
     buildWidgetAutoBlocks(main);
+    buildScrollNavigation(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
