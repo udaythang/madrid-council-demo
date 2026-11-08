@@ -142,12 +142,29 @@ function decorateButtons(main) {
   });
 }
 
+/** blocks that draw their :icon: tokens with the Madrid icon font (no /icons/*.svg files) */
+const ICON_FONT_BLOCKS = ['cards-topics', 'cards-features'];
+
+/**
+ * Hands icon tokens in icon-font blocks back as `:name:` text, which those blocks read,
+ * so decorateIcons does not create <img src="/icons/name.svg"> requests that 404.
+ * @param {Element} main The container element
+ */
+function keepIconFontTokens(main) {
+  const selector = ICON_FONT_BLOCKS.map((name) => `.${name} span.icon`).join(', ');
+  main.querySelectorAll(selector).forEach((span) => {
+    const iconName = [...span.classList].find((c) => c.startsWith('icon-'))?.slice(5);
+    if (iconName) span.replaceWith(`:${iconName}:`);
+  });
+}
+
 /**
  * Decorates the main element.
  * @param {Element} main The main element
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
+  keepIconFontTokens(main);
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
